@@ -57,7 +57,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{route('admin.users.index')}}" class="btn btn-default btn-flat">User Management</a>
+                  <a href="{{url('admin/user')}}" class="btn btn-default btn-flat">User Management</a>
                 </div>
                 <div class="pull-right">
                   <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
@@ -101,7 +101,6 @@
         <li class="treeview">
             <li><a href="{{url('layanan/{layanan}')}}"><i class="fa fa-dashboard"></i> Evaluasi</a></li>
             <li><a href="{{url('layanan')}}"><i class="fa fa-edit"></i>Layanan</a></li>
-            <li><a href="{{url('kategori')}}"><i class="fa fa-pencil"></i>Kategori Layanan</a></li>
             <li><a href="{{url('soal')}}"><i class="fa fa-database"></i>Soal</a></li>
             <li><a href="{{url('pilihan')}}"><i class="fa fa-bars"></i>Pilihan</a></li>
         </li>
@@ -142,5 +141,7 @@
 <script src="{{asset('dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+
+@yield('javascript')
 </body>
 </html>

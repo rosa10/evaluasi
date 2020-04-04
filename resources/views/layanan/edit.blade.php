@@ -12,21 +12,21 @@
 			<select for="user_id" id="user_id" name="user_id" class="form-control">
 				@foreach ($user as $user)
 				<option  value="{{$user->id}}"
-					@if ($user->layanan->pluck('user_id')->contains($user->id)) selected @endif> 
+					@if ($layanan->user()->get()->pluck('id')->contains($user->id)) selected @endif> 
 					{{$user->name}}
 				</option>
 				@endforeach
-			  </select>
+			</select>
 			</div>
 		<div class="form-group">
 			<label for="layanan">Layanan</label>
-			<input type="text" class="form-control" id="layanan" placeholder="Masukkan indikator" name="layanan"value="{{$layanan->layanan}}">
+			<input type="text" class="form-control" id="layanan" placeholder="Masukkan layanan" name="layanan"value="{{$layanan->layanan}}">
 		</div>
 		<div class="form-group">
 			<label for="semester">Semester</label>
-			<input type="text" class="form-control" id="semester" placeholder="Masukkan indikator" name="semester"value="{{$layanan->semester}}">
+			<input type="text" class="form-control" id="semester" placeholder="Masukkan semester" name="semester"value="{{$layanan->semester}}">
 		</div>
-		<button type="submit" class="btn btn-primary">Ubah Data</button>
+		<button type="submit" class="btn btn-success">Ubah Data</button>
 	</form>
 </div>
 @endsection

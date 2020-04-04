@@ -25,7 +25,13 @@ class LayananController extends Controller
      */
     public function create()
     {
-        $user=User::all();
+        $admin = 'admin';
+        $dosen = 'dosen';
+        $user = User::whereHas('roles', function ($query) use ($admin, $dosen) {
+            $query
+                ->where('name', $admin)
+                ->orWhere('name', $dosen);
+        })->get();
         return view ('layanan.create')->with('user',$user);
     }
 
@@ -38,7 +44,7 @@ class LayananController extends Controller
     public function store(Request $request)
     {
         Layanan::create($request->all());
-        return redirect('/layanan')-> with('status','Indikator Berhasil Ditambah');
+        return redirect('/layanan')-> with('success','Layanan '.$request->layanan.' berhasil Ditambah');
     }
 
     /**
