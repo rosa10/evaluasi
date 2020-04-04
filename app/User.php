@@ -53,4 +53,8 @@ class User extends Authenticatable
         return false;
         
     }
+
+    public function layanan(){
+        return $this->hasOne('App\Layanan', 'user_id');
+    }
 }
