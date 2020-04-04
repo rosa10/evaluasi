@@ -7,6 +7,7 @@ use App\User;
 use App\Role;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -28,7 +29,11 @@ class UsersController extends Controller
      */
     public function create()
     {
-        
+        $role = Role::all();
+
+        return view('admin.users.create', [
+            'role' => $role,
+        ]);
     }
 
     /**
@@ -39,7 +44,21 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:users,name',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]);
+
+        $user = User::create([
+
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        $user->roles()->sync($request->roles);
+
+        return redirect('admin/user')->with('success', 'User '.$user->name.' berhasil ditambahkan');
     }
 
     /**
@@ -67,7 +86,7 @@ class UsersController extends Controller
         $roles=Role::all();
         return view('admin.users.edit')->with([
             'user'=>$user,
-            'roles'=>$roles
+            'role'=>$roles
         ]);
     }
 
@@ -84,11 +103,11 @@ class UsersController extends Controller
         $user->name=$request->name;
         $user->email=$request->email;
         if ($user->save()){
-            $request->session()->flash('success',$user->name .'has been updated');
+            return redirect('admin/user')->with('warning', 'User '.$request->name.' berhasil di ubah');
         }else{
             $request->session()->flash('errorr','There was an error updating the user');
         }
-        return redirect()->route('admin.users.index');
+        
     }
 
     /**
@@ -100,10 +119,10 @@ class UsersController extends Controller
     public function destroy(User $user)
     {
         if (Gate::denies('edit-users')){
-            return redirect(route('admin.users.index'));
+            return redirect('admin/user');
         }
         $user->roles()->detach();
         $user->delete();
-        return redirect()->route('admin.users.index');
+        return redirect('admin/user')->with('errorr', 'User '.$user->name.' berhasil dihapus');
     }
 }

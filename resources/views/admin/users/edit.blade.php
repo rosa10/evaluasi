@@ -1,62 +1,58 @@
 @extends('layouts.app')
-
+@section('page-title','Edit User '.$user->name)
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Edit</div>
 
-                <div class="card-body">
-                  <form action="{{route('admin.users.update',$user)}}" method="post">
-                    
-                    <div class="form-group row">
-                      <label for="email" class="col-md-2 col-form-label text-md-right">Email</label>
+<div class="box">
 
-                      <div class="col-md-6">
-                          <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{$user->email}}" required autocomplete="email" autofocus>
+    <div class="box-header with-border">
+        <a href="{{url('admin/user')}}" class="btn btn-danger my-2 ">Kembali</a>
+		<div class="box-tools pull-right">
+		</div>
+    </div>
 
-                          @error('email')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror
-                      </div>
-                  </div>
+    <div class="box-body">
 
-                  <div class="form-group row">
-                    <label for="name" class="col-md-2 col-form-label text-md-right">Name</label>
-
-                    <div class="col-md-6">
-                        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$user->name }}" required autofocus>
-
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+        <form method="post" action="{{url('/admin/user/'.$user->id)}}">
+            @method('patch')
+            @csrf
+                <div class="form-group">
+                    <label for="name">Nama User</label>
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        id="name" placeholder="cth: Dosen UPT TIK" value="{{old('name', $user->name)}}">
+                    @error('name')
+                    <div class="invalid-feedback">
+                        {{ $message }}
                     </div>
+                    @enderror
                 </div>
-                    @csrf
-                    {{method_field('put')}}
-                    <div class="form-group row">
-                      <label for="roles" class="col-md-2 col-form-label text-md-right">Roles</label>
-                      <div class="col-md-6">
-                    @foreach($roles as $role)
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
+                        id="email" placeholder="Cth: mahasiswa@gmail.com" value="{{old('email', $user->email)}}">
+                    @error('email')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label for="checkbox">Pilihan Role Akun</label>
+                    @foreach($role as $roles)
                     <div class="form-check">
-                      <input type="checkbox" name="roles[]" value="{{$role->id}}" 
-                      @if ($user->roles->pluck('id')->contains($role->id)) checked @endif
-                      >
-                      <label>{{$role->name}}</label>
+                        <input type="checkbox" name="roles[]" value="{{$roles->id}}" @if($user->roles->pluck('id')->contains($roles->id)) checked @endif>
+                        <label> {{$roles->name}} </label>
                     </div>
                     @endforeach
-                    <button type="submit" class="btn btn-primary">
-                      Update
-                    </button>
-                  </form>
                 </div>
-            </div>
-        </div>
+            
+            <button type="submit" class="btn btn-success mr-2">Ubah Data</button>
+
+        </form>
+
     </div>
+
+
 </div>
+
 @endsection
