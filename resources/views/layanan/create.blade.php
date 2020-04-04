@@ -17,15 +17,15 @@
 					{{$user->name}}
 				</option>
 				@endforeach
-			  </select>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="layanan">Layanan</label>
-			<input type="text" class="form-control" id="layanan" placeholder="Masukkan indikator" name="layanan">
+			<input type="text" class="form-control" id="layanan" placeholder="Masukkan layanan" name="layanan">
 		</div>
 		<div class="form-group">
 			<label for="semester">Semester</label>
-			<input type="text" class="form-control" id="semester" placeholder="Masukkan indikator" name="semester">
+			<input type="text" class="form-control" id="semester" placeholder="Masukkan semester" name="semester">
 		</div>
 		<button type="submit" class="btn btn-primary">Tambah Data</button>
 	</form>
