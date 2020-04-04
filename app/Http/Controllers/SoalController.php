@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Soal;
 use App\Pilihan;
+use App\Layanan;
 use Illuminate\Http\Request;
 
 class SoalController extends Controller
@@ -26,7 +27,13 @@ class SoalController extends Controller
      */
     public function create()
     {
-        return view ('soal.create');
+        $pilihan=Pilihan::all();
+        $layanan=Layanan::all();
+        return view ('soal.create',[
+            'layanan' => $layanan,
+            'pilihan' => $pilihan
+
+        ]);;
     }
 
     /**
@@ -37,7 +44,11 @@ class SoalController extends Controller
      */
     public function store(Request $request)
     {
-        Soal::create($request->all());
+        $soal = Soal::create([
+            'layanan_id'=>$request->layanan_id,
+            'soal' => $request->soal,
+        ]);
+        $soal->pilihan()->sync($request->pilihan);
         return redirect('/soal')-> with('status','Indikator Berhasil Ditambah');
     }
 
@@ -60,7 +71,13 @@ class SoalController extends Controller
      */
     public function edit(Soal $soal)
     {
-        return view('soal.edit', compact('soal'));
+        $pilihan=Pilihan::all();
+        $layanan=Layanan::all();
+        return view('soal.edit', [
+            'soal' => $soal,
+            'pilihan' => $pilihan,
+            'layanan'=>$layanan,
+        ]);
     }
 
     /**
@@ -72,7 +89,12 @@ class SoalController extends Controller
      */
     public function update(Request $request, Soal $soal)
     {
-        $soal->update($request->all());
+        $soal->pilihan()->sync($request->pilihan);
+        Soal::where('id', $soal->id)
+                    ->update([
+                        'layanan_id'=>$request->layanan_id,
+                        'soal' => $request->soal,
+                    ]);       
         return redirect('/soal')-> with('status','Indikator Berhasil Diubah');
     }
 

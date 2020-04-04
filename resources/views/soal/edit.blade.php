@@ -9,14 +9,29 @@
 		@method('put')
 		@csrf
 		<div class="form-group">
-			<label for="layanan_id">Layanan id</label>
-			<input type="text" class="form-control" id="layanan_id" placeholder="Masukkan indikator" name="layanan_id"value="{{$soal->layanan_id}}">
+			<select for="layanan_id" id="layanan_id" name="layanan_id" class="form-control">
+				@foreach ($layanan as $layanan)
+				<option  value="{{$layanan->id}}"
+					@if ($soal->layanan()->get()->pluck('id')->contains($layanan->id)) selected @endif> 
+					{{$layanan->layanan}}
+				</option>
+				@endforeach
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="soal">Soal</label>
 			<input type="text" class="form-control" id="soal" placeholder="Masukkan indikator" name="soal"value="{{$soal->soal}}">
 		</div>
-		
+		<div class="form-group">
+			<label for="checkbox">Pilihan</label>
+      		@foreach($pilihan as $plh)
+      			<div class="form-check">
+				  <input type="checkbox" name="pilihan[]" value="{{$plh->id}}"
+				  @if($soal->pilihan->pluck('id')->contains($plh->id)) checked @endif>
+      			<label>{{$plh->pilihan}} Value:{{$plh->value}}</label>
+      			</div>
+	  		@endforeach
+		</div>
 		<button type="submit" class="btn btn-primary">Ubah Data</button>
 	</form>
 </div>

@@ -11,14 +11,27 @@
 		@method('post')
 		@csrf
 		<div class="form-group">
-			<label for="layanan_id">Layanan id</label>
-			<input type="text" class="form-control" id="layanan_id" placeholder="Masukkan indikator" name="layanan_id">
+			<select for="layanan_id" id="layanan_id" name="layanan_id" class="form-control">
+				@foreach ($layanan as $layanan)
+				<option  value="{{$layanan->id}}"> 
+					{{$layanan->layanan}}
+				</option>
+				@endforeach
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="soal">Soal</label>
 			<input type="text" class="form-control" id="soal" placeholder="Masukkan indikator" name="soal">
 		</div>
-		
+		<div class="form-group">
+			<label for="checkbox">Pilihan</label>
+      		@foreach($pilihan as $plh)
+      			<div class="form-check">
+      			<input type="checkbox" name="pilihan[]" value="{{$plh->id}}">
+      			<label>{{$plh->pilihan}} Value:{{$plh->value}}</label>
+      			</div>
+	  		@endforeach
+		</div>
 		<button type="submit" class="btn btn-primary">Tambah Data</button>
 	</form>
 </div>
