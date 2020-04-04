@@ -20,10 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function(){
-    Route::resource('/admin/users', 'UsersController');
-});
-Route::resource('/layanan', 'LayananController');
-Route::resource('/kategori', 'KategoriController');
+Route::resource('admin/user', 'Admin\UsersController');
+// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function(){
+//     Route::resource('/admin/users', 'UsersController');
+// });
+
+//layanan
+Route::get('/layanan/create-kategori/{layanan}', 'KategoriController@create');
+Route::post('/layanan/create-kategori/{layanan}', 'KategoriController@store');
+Route::resource('/layanan', 'LayananController')->except('show');
+
+
+
+// Route::resource('/kategori', 'KategoriController');
 Route::resource('/soal', 'SoalController');
 Route::resource('/pilihan', 'PilihanController');
