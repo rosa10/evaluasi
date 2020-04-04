@@ -7,70 +7,40 @@ use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    
+    public function create(Layanan $layanan)
     {
-        $kategori=Kategori::all();
-        return view('kategori.index')->with('kategori',$kategori);
+        $kategori = $layanan->kategori()->paginate(10);
+        return view ('layanan.kategori.create', [
+            'layanan' => $layanan,
+            'kategori' => $kategori
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(Layanan $layanan, Request $request)
     {
-        $layanan=Layanan::all();
-        return view ('kategori.create')->with('layanan',$layanan);
+        $request->validate([
+            'kategori' => 'required'
+        ]);
+
+        Kategori::create([
+            'layanan_id' => $layanan->id,
+            'kategori' => $request->kategori
+        ]);
+        return back()-> with('status','Indikator Berhasil Ditambah');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        Kategori::create($request->all());
-        return redirect('/kategori')-> with('status','Indikator Berhasil Ditambah');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\kategori_layanan  $kategori_layanan
-     * @return \Illuminate\Http\Response
-     */
     public function show(kategori_layanan $kategori_layanan)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\kategori_layanan  $kategori_layanan
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Kategori $kategori)
     {
         $layanan=Layanan::all();
         return view('kategori.edit', compact('kategori'))->with('layanan',$layanan);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\kategori_layanan  $kategori_layanan
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Kategori $kategori)
     {
         $kategori->update($request->all());
