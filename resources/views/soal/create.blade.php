@@ -25,6 +25,9 @@
 		</div>
 		<div class="form-group">
 			<label for="checkbox">Pilihan</label>
+			<br>
+			<a role="button" class="btn btn-outline-dark" href="javascript:pilihsemua()">Check All</a>&nbsp;&nbsp;
+<a href="javascript:bersihkan()">Uncheck All</a>
       		@foreach($pilihan as $plh)
       			<div class="form-check">
       			<input type="checkbox" name="pilihan[]" value="{{$plh->id}}">
@@ -34,5 +37,25 @@
 		</div>
 		<button type="submit" class="btn btn-primary">Tambah Data</button>
 	</form>
+
+	<script>
+	function pilihsemua(){
+    var daftarku = document.getElementsByName("pilihan[]");
+    var jml=daftarku.length;
+    var b=0;
+    for (b=0;b<jml;b++)
+    {
+        daftarku[b].checked=true;
+	}}
+	function bersihkan(){
+    var daftarku = document.getElementsByName("pilihan[]");
+    var jml=daftarku.length;
+    var b=0;
+    for (b=0;b<jml;b++)
+    {
+        daftarku[b].checked=false;
+    }
+}
+</script>
 </div>
 @endsection

@@ -25,7 +25,7 @@
     <!-- Logo -->
     <a href="#" class="logo">
       <span class="logo-mini">ITK</span>
-      <span class="logo-lg">Laravel Blog<b>Admin</b>LTE</span>
+      <span class="logo-lg">Evaluasi ITK<b>Admin</b>LTE</span>
     </a>
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
@@ -57,7 +57,9 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
+                  @can('manage-users')
                   <a href="{{url('admin/user')}}" class="btn btn-default btn-flat">User Management</a>
+                  @endcan
                 </div>
                 <div class="pull-right">
                   <a class="btn btn-default btn-flat" href="{{ route('logout') }}"
@@ -99,10 +101,13 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="treeview">
-            <li><a href="{{url('layanan/{layanan}')}}"><i class="fa fa-dashboard"></i> Evaluasi</a></li>
+            <li><a href="{{url('jawaban')}}"><i class="fa fa-dashboard"></i> Evaluasi</a></li>
+            
+            @can('manage-survey')
             <li><a href="{{url('layanan')}}"><i class="fa fa-edit"></i>Layanan</a></li>
             <li><a href="{{url('soal')}}"><i class="fa fa-database"></i>Soal</a></li>
             <li><a href="{{url('pilihan')}}"><i class="fa fa-bars"></i>Pilihan</a></li>
+            @endcan
         </li>
       </ul>
     </section>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Layanan;
 use App\Kategori;
+use App\User;
 use Illuminate\Http\Request;
 
 class KategoriController extends Controller
@@ -10,11 +11,18 @@ class KategoriController extends Controller
     
     public function create(Layanan $layanan)
     {
+        $admin = 'admin';
+        $dosen = 'dosen';
+        $user = User::whereHas('roles', function ($query) use ($admin, $dosen) {
+            $query
+                ->where('name', $admin)
+                ->orWhere('name', $dosen);
+        })->get();
         $kategori = $layanan->kategori()->paginate(10);
         return view ('layanan.kategori.create', [
             'layanan' => $layanan,
             'kategori' => $kategori
-        ]);
+        ])->with('user',$user);
     }
 
     public function store(Layanan $layanan, Request $request)
@@ -24,6 +32,7 @@ class KategoriController extends Controller
         ]);
 
         Kategori::create([
+            'user_id'=>$request->user_id,
             'layanan_id' => $layanan->id,
             'kategori' => $request->kategori
         ]);
@@ -37,14 +46,24 @@ class KategoriController extends Controller
 
     public function edit(Kategori $kategori)
     {
+        $admin = 'admin';
+        $dosen = 'dosen';
+        $user = User::whereHas('roles', function ($query) use ($admin, $dosen) {
+            $query
+                ->where('name', $admin)
+                ->orWhere('name', $dosen);
+        })->get();
         $layanan=Layanan::all();
-        return view('kategori.edit', compact('kategori'))->with('layanan',$layanan);
+        return view('layanan.kategori.edit', [
+            'layanan' => $layanan,
+            'kategori' => $kategori
+        ])->with('user',$user);
     }
 
     public function update(Request $request, Kategori $kategori)
     {
         $kategori->update($request->all());
-        return redirect('/kategori')-> with('status','Indikator Berhasil Diubah');
+        return redirect('/layanan')-> with('status','Indikator Berhasil Diubah');
         
     }
 

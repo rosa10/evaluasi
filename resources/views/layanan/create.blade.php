@@ -10,23 +10,12 @@
 	<form method="post" action="{{route('layanan.store')}}">
 		@method('post')
 		@csrf
-		<div class="form-group">
-			<select for="user_id" id="user_id" name="user_id" class="form-control">
-				@foreach ($user as $user)
-				<option  value="{{$user->id}}"> 
-					{{$user->name}}
-				</option>
-				@endforeach
-			</select>
-		</div>
+		
 		<div class="form-group">
 			<label for="layanan">Layanan</label>
 			<input type="text" class="form-control" id="layanan" placeholder="Masukkan layanan" name="layanan">
 		</div>
-		<div class="form-group">
-			<label for="semester">Semester</label>
-			<input type="text" class="form-control" id="semester" placeholder="Masukkan semester" name="semester">
-		</div>
+		
 		<button type="submit" class="btn btn-primary">Tambah Data</button>
 	</form>
 </div>

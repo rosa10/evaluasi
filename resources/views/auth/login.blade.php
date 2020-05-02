@@ -19,12 +19,17 @@
 
 </head>
 <body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
+<div class="login-box">  
+  {{-- <div class="login-logo">
     <b>Evaluasi ITK </b>
-  </div>
+  </div> --}}
   <!-- /.login-logo -->
   <div class="login-box-body">
+    <div class="text-center">
+      <img src="{{asset('dist/img/itkitk.jpg')}}" class="img-fluid" width="40%" alt="User Image">
+      <br>
+      <b><h3> Evaluasi ITK </b>
+      </div>
     <p class="login-box-msg">Sistem Informasi Evaluasi Akademik dan Layanan ITK</p>
     <form method="POST" action="{{ route('login') }}">
         @csrf

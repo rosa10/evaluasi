@@ -12,9 +12,9 @@
                     <thead>
                       <tr>
                         <th scope="col">#</th>
-                        <th scope="col">User</th>
+                        {{-- <th scope="col">User</th> --}}
                         <th scope="col">Layanan</th>
-					            	<th scope="col">Semester</th>
+                        <th scope="col">Kode Layanan</th>
 						            <th scope="col"width="250px">Aksi</th>
                       </tr>
                     </thead>
@@ -22,11 +22,11 @@
                         @foreach($layanan as $layanan)
                         <tr>
                         <td>{{$loop->iteration}}</td>
-                          <td>
+                          {{-- <td>
                             {{implode(', ',$layanan->user()->get()->pluck('name')->sort()->toArray())}}
-                          </td>
+                          </td> --}}
                           <td>{{$layanan->layanan}}</td>
-                          <td>{{$layanan->semester}}</td>
+                          <td>{{$layanan->id}}</td>
                           <td class="pull-left">
                             <a href="{{url('layanan/create-kategori/'.$layanan->id)}}">
                               <button type="button" class="btn btn-warning btn-sm mr-2"><i class="fa fa-plus"></i> Kategori</button>

@@ -40,7 +40,7 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
     }
     public function hasAnyRoles($roles){
-        if($this->roles()->where('name',$roles)->first()){
+        if($this->roles()->whereIn('name',$roles)->first()){
             return true;
         }
         return false;
@@ -54,7 +54,7 @@ class User extends Authenticatable
         
     }
 
-    public function layanan(){
-        return $this->hasOne('App\Layanan', 'user_id');
+    public function kategori(){
+        return $this->hasOne('App\Kategori', 'user_id');
     }
 }

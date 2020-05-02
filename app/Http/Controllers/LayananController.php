@@ -25,14 +25,8 @@ class LayananController extends Controller
      */
     public function create()
     {
-        $admin = 'admin';
-        $dosen = 'dosen';
-        $user = User::whereHas('roles', function ($query) use ($admin, $dosen) {
-            $query
-                ->where('name', $admin)
-                ->orWhere('name', $dosen);
-        })->get();
-        return view ('layanan.create')->with('user',$user);
+        
+        return view ('layanan.create');
     }
 
     /**
@@ -67,8 +61,8 @@ class LayananController extends Controller
      */
     public function edit(Layanan $layanan)
     {
-        $user=User::all();
-        return view('layanan.edit', compact('layanan'))->with('user',$user);
+        
+        return view('layanan.edit', compact('layanan'));
     }
 
     /**

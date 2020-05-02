@@ -8,6 +8,49 @@
             </div></div>
                 <div class="box-body">
                   @include('partials.alerts')
+                  <div class="pull-left">
+                  <button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
+                    Import Excel
+                  </button>
+                  </div>
+                  <div class="pull">
+                  <form method="post" action="#">
+                    @method('patch')
+                    @csrf
+                  <button type="button" class="btn btn-primary mr-5" data-toggle="modal">
+                    Cek Status
+                  </button>
+                  </form>
+                </div>
+                  <!-- Import Excel -->
+                  <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <form method="post" action="{{url('/user/import_excel')}}" enctype="multipart/form-data">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                          </div>
+                          <div class="modal-body">
+               
+                            {{ csrf_field() }}
+               
+                            <label>Pilih file excel</label>
+                            <div class="form-group">
+                              <input type="file" name="file" required="required">
+                            </div>
+               
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Import</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+               
+               
+                  
                    <table class="table">
                     <thead>
                       <tr>
@@ -15,6 +58,7 @@
                         <th scope="col">Nama</th>
                         <th scope="col">Email</th>
                         <th scope="col">Roles</th>
+                        <th scope="col">Status</th>
                         <th scope="col"width="150px">Aksi</th>
                       </tr>
                     </thead>
@@ -25,6 +69,13 @@
                           <td>{{$user->name}}</td>
                           <td>{{$user->email}}</td>
                           <td>{{implode(', ',$user->roles()->get()->pluck('name')->toArray())}}</td>
+                          <td>
+                            @if ($user->status == 1)
+                            sukses
+                            @else
+                            belum
+                            @endif
+                          </td>
                           <td>
                             <a href="{{url('admin/user/'.$user->id.'/edit')}}" class="btn btn-primary btn-sm mr-2">
                               Edit

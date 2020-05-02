@@ -17,9 +17,12 @@ class CreateJawabanTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('kategori_id');
+            $table->foreign('kategori_id')->references('id')->on('kategori_layanan')->onDelete('cascade');
             $table->unsignedBigInteger('soal_id');
             $table->foreign('soal_id')->references('id')->on('soal')->onDelete('cascade');
             $table->integer('nilai');
+            $table->text('kritik');
             $table->boolean('status');
             $table->timestamps();
         });
