@@ -15,6 +15,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
   <link rel="stylesheet" href="{{asset('dist/css/skins/_all-skins.min.css')}}">
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="{{asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
 
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
@@ -140,6 +144,13 @@
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
 <!-- SlimScroll -->
 <script src="{{asset('plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
+<!-- date-range-picker -->
+<script src="{{asset('plugins/daterangepicker/daterangepicker.js')}}"></script>
+<!-- InputMask -->
+<script src="{{asset('/plugins/moment/moment.min.js')}}"></script>
+<script src="{{asset('/plugins/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
+<!-- bootstrap color picker -->
+<script src="{{asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
 <!-- FastClick -->
 <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
 <!-- AdminLTE App -->

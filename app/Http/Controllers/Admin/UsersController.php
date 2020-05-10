@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Role;
+use App\Jawaban;
+use App\Layanan;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -22,8 +24,8 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users=User::all();
-        return view('admin.users.index')->with('users',$users);
+        $users = User::all();
+        return view('admin.users.index')->with('users', $users);
     }
 
     /**
@@ -62,7 +64,7 @@ class UsersController extends Controller
         ]);
         $user->roles()->sync($request->roles);
 
-        return redirect('admin/user')->with('success', 'User '.$user->name.' berhasil ditambahkan');
+        return redirect('admin/user')->with('success', 'User ' . $user->name . ' berhasil ditambahkan');
     }
 
     /**
@@ -84,13 +86,13 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
-        if (Gate::denies('edit-users')){
+        if (Gate::denies('edit-users')) {
             return redirect(route('admin.users.index'));
         }
-        $roles=Role::all();
+        $roles = Role::all();
         return view('admin.users.edit')->with([
-            'user'=>$user,
-            'role'=>$roles
+            'user' => $user,
+            'role' => $roles
         ]);
     }
 
@@ -104,14 +106,13 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         $user->roles()->sync($request->roles);
-        $user->name=$request->name;
-        $user->email=$request->email;
-        if ($user->save()){
-            return redirect('admin/user')->with('warning', 'User '.$request->name.' berhasil di ubah');
-        }else{
-            $request->session()->flash('errorr','There was an error updating the user');
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if ($user->save()) {
+            return redirect('admin/user')->with('warning', 'User ' . $request->name . ' berhasil di ubah');
+        } else {
+            $request->session()->flash('errorr', 'There was an error updating the user');
         }
-        
     }
 
     /**
@@ -122,36 +123,65 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        if (Gate::denies('edit-users')){
+        if (Gate::denies('edit-users')) {
             return redirect('admin/user');
         }
         $user->roles()->detach();
         $user->delete();
-        return redirect('admin/user')->with('errorr', 'User '.$user->name.' berhasil dihapus');
+        return redirect('admin/user')->with('errorr', 'User ' . $user->name . ' berhasil dihapus');
     }
-    public function import_excel(Request $request) 
-	{
-		// validasi
-		$this->validate($request, [
-			'file' => 'required|mimes:csv,xls,xlsx'
-		]);
- 
-		// menangkap file excel
-		$file = $request->file('file');
- 
-		// membuat nama file unik
-		$nama_file = rand().$file->getClientOriginalName();
- 
-		// upload ke folder file_siswa di dalam folder public
-		$file->move('file_siswa',$nama_file);
- 
-		// import data
-		Excel::import(new UserImport, public_path('/file_siswa/'.$nama_file));
- 
-		// notifikasi dengan session
-		Session::flash('sukses','Data Siswa Berhasil Diimport!');
- 
-		// alihkan halaman kembali
-		return redirect('admin/user');
-	}
+    public function import_excel(Request $request)
+    {
+        // validasi
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        // menangkap file excel
+        $file = $request->file('file');
+
+        // membuat nama file unik
+        $nama_file = rand() . $file->getClientOriginalName();
+
+        // upload ke folder file_siswa di dalam folder public
+        $file->move('file_siswa', $nama_file);
+
+        // import data
+        Excel::import(new UserImport, public_path('/file_siswa/' . $nama_file));
+
+        // notifikasi dengan session
+        Session::flash('sukses', 'Data Siswa Berhasil Diimport!');
+
+        // alihkan halaman kembali
+        return redirect('admin/user');
+    }
+    public function status(Request $request)
+    {
+        // menangkap data pengecekan
+        $cek = $request->cek;
+
+        // mengambil data dari table pegawai sesuai pencarian data
+        $user = DB::table('user')
+            ->where('name', 'like', "%" . $cek . "%")
+            ->paginate();
+
+        // mengirim data pegawai ke view index
+        return view('index', ['pegawai' => $pegawai]);
+
+        $user->roles()->sync($request->roles);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $jawaban = Jawaban::all();
+        $layanan = Layanan::all();
+        $a = $layanan->id->collect();
+        foreach ($user as $user) {
+            if ($jawaban->user_id->contains('layanan_id', $a)) {
+                //bakal post 1 status di user_id
+                return redirect('admin/user')->with('warning', 'User ' . $request->name . ' berhasil di ubah');
+            } else {
+                //bakal post 0 status di user_id
+                $request->session()->flash('errorr', 'There was an error updating the user');
+            }
+        }
+    }
 }

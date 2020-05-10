@@ -17,6 +17,8 @@ class CreateJawabanTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('layanan_id');
+            $table->foreign('layanan_id')->references('id')->on('layanan')->onDelete('cascade');
             $table->unsignedBigInteger('kategori_id');
             $table->foreign('kategori_id')->references('id')->on('kategori_layanan')->onDelete('cascade');
             $table->unsignedBigInteger('soal_id');

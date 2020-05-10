@@ -16,11 +16,12 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($jawaban as $p)
+			
+			@foreach($jawaban as $key=>$dataJawaban)
 			<tr>
-				<td>{{$loop->iteration}}</td>				
-				<td>{{$jumlah=$p->whereIn('kategori_id',[$kategori->id])->whereIn('soal_id',[$layanan->contains($kategori->layanan_id)])->sum('nilai')}}</td>
-				<td>{{$responden=$p->get()->count()/$soal->whereIn('layanan_id',[$layanan->contains($kategori->layanan_id)])->count()}}</td>
+				<td>{{$loop->iteration}}</td>			
+				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
+				<td>{{$responden=$dataJawaban->get()->count()/$soal->whereIn('layanan_id',[$dataJawaban->id])->count()}}</td>
 				<td>{{$jumlah/$responden}}</td>
 			</tr>
 			@endforeach

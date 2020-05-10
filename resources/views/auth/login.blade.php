@@ -34,7 +34,7 @@
     <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="form-group has-feedback">            
-                <input id="email" type="email"
+          <input id="email" type="email"
                     class="form-control @error('email') is-invalid @enderror"
                     placeholder="Email" name="email" value="{{ old('email') }}" required
                     autocomplete="email" autofocus>
@@ -44,10 +44,10 @@
                     <strong>{{ $message }}</strong>
                 </span>
                 @enderror
-            
-        </div>
+            </div>
         <div class="form-group has-feedback ">
-                <input id="password" type="password"
+          <input id="password" type="password"
+
                     class="form-control @error('password') is-invalid @enderror"
                     placeholder="Password" name="password" required autocomplete="current-password">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>

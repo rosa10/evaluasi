@@ -14,13 +14,22 @@
                   </button>
                   </div>
                   <div class="pull">
-                  <form method="post" action="#">
-                    @method('patch')
-                    @csrf
-                  <button type="button" class="btn btn-primary mr-5" data-toggle="modal">
-                    Cek Status
-                  </button>
-                  </form>
+                    <!-- Date range -->
+                    <form action="{{url('status')}}" method="post">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                      </span>
+                    </div>
+                    <input name="cek" value="" type="text" placeholder="Rentang Tanggal" class="form-control float-right" id="reservation">
+                  </div>
+                  <!-- /.input group -->
+                </div>
+                <!-- /.form group -->
+<button type="submit" class="btn btn-primary ">Submit</button>
+</form>
                 </div>
                   <!-- Import Excel -->
                   <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

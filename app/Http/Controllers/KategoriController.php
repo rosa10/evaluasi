@@ -76,6 +76,6 @@ class KategoriController extends Controller
     public function destroy(Kategori $kategori)
     {
         Kategori::destroy($kategori->id);
-        return redirect('/kategori')-> with('status','Indikator Berhasil Dihapus');
+        return redirect('/layanan')-> with('status','Indikator Berhasil Dihapus');
     }
 }

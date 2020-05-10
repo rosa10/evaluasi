@@ -10,18 +10,23 @@
         @method('post')
         @csrf
       @foreach ($layanan as $layanan)
+      
       @foreach ($layanan->kategori as $kategori)
-      <input hidden name="kategori_id" value="{{$kategori->id}}">
-      <button for="layanan_id" id="layanan_id" name="layanan_id" class="btn btn-app" value="{{$layanan->id}}">
+      
+      
+      <button for="kategori_id" id="kategori_id" name="kategori_id" class="btn btn-app" value="{{$kategori->id}}">
+        
         {{-- @if ($layanan->id->diff($jawaban->layanan_id))  --}}
         <span  class="badge bg-warning">Belum diisi</span>
         {{-- @endif --}}
         
         {{-- @if ($kategori->layanan_id===$layanan->id) --}}
         
-        <i name="kategori_id" value="{{$kategori->id}}" type="submit" class="fa fa-edit"></i> {{$layanan->layanan}}: {{$kategori->kategori}}
-        {{-- @endif --}}
         
+        <i type="submit" class="fa fa-edit"></i> {{$layanan->layanan}}: {{$kategori->kategori}}
+        
+        {{-- @endif --}}
+      
       </button>
       
       @endforeach

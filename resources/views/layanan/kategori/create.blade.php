@@ -78,21 +78,63 @@
 						<a href="{{route('kategori.edit',$dataKategori->id)}}" class="d-inline p-2">
 								<button type="button" class="btn btn-warning btn-sm">Edit</button>
 							</a>
-							<a href="" class="d-inline p-2">
-								<button type="button" class="btn btn-danger btn-sm">Delete</button>
-							</a>
+							<button id="tombolHapusData"
+                                    class="btn btn-danger btn-sm delete-data"
+                                    data-name="{{ $dataKategori->kategori }}" data-toggle="modal"
+                                    data-target="#modalHapusData"
+                                    data-url="{{url('kategori/'.$dataKategori->id)}}"><i
+                                        class="fa fa-trash"></i>
+                                    Delete
+                                </button>
 						</td>
 					</tr>
 				@endforeach
-				
+				<!-- Modal -->
+				<form action="" method="POST" id="deleteForm">
+					@method('delete')
+					@csrf
+					<div class="modal fade" id="modalHapusData" tabindex="-1" role="dialog"
+						aria-labelledby="hapusDataTitle" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLongTitle">Hapus Data</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body" align="center">
+									
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">Batal</button>
+
+									<button type="submit" class="btn btn-danger">Hapus</button>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!-- EndModal -->
 			</tbody>
-
 		</table>
-
 		{{$kategori->links()}}
-
 	</div>
-
 </div>
-
+@endsection
+@section('javascript')
+    {{-- Button Delete data  --}}
+    <script>
+      $(document).ready(function () {
+          $('.delete-data').click(function () {
+              var url = $(this).attr('data-url');
+              var nama = $(this).attr('data-name');
+              console.log(nama);
+              $("#modalHapusData").find(".modal-body").text("Apakah anda ingin menghapus kategori " + nama + "?");
+              $("#deleteForm").attr("action", url);
+          });
+      });
+  </script>
 @endsection
