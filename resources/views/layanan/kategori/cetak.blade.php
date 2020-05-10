@@ -17,11 +17,17 @@
 		</thead>
 		<tbody>
 			
+			@foreach ($soal as $key=>$datasoal)
+			@if ($datasoal->layanan_id==$kategori->layanan_id)
+				<p hidden> {{$jumlahsoallayanan=$datasoal->layanan_id}}</p>	
+			@endif
+			{{-- {{$datasoal}} --}}
+			@endforeach
 			@foreach($jawaban as $key=>$dataJawaban)
 			<tr>
 				<td>{{$loop->iteration}}</td>			
 				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
-				<td>{{$responden=$dataJawaban->get()->count()/$soal->whereIn('layanan_id',[$dataJawaban->id])->count()}}</td>
+				<td>{{$responden=$dataJawaban->get()->count()/$jumlahsoallayanan}}</td>
 				<td>{{$jumlah/$responden}}</td>
 			</tr>
 			@endforeach

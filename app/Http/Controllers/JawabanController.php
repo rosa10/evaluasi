@@ -55,23 +55,23 @@ class JawabanController extends Controller
      */
     public function store(Request $request)
     {
-        return dd($request);
-        // $size = count(collect($request)->get('nilai'));
-        // for ($i = 0; $i < $size; $i++) {
-        //     $data[] = [
-        //         'user_id' => $request->user_id,
-        //         'soal_id' => $request->soal[$i],
-        //         'layanan_id' => $request->layanan_id,
-        //         'kategori_id' => $request->kategori_id,
-        //         'nilai' => $request->nilai[$request->soal[$i]],
-        //         'status' => 1,
-        //         'kritik' => $request->kritik,
-        //         'created_at' => Carbon::now()->setTimezone('Asia/Singapore'),
-        //         'updated_at' => Carbon::now()->setTimezone('Asia/Singapore'),
-        //     ];
-        // }
-        // Jawaban::insert($data);
-        // return redirect('/jawaban')->with('status', 'Evaluasi anda berhasil masuk');
+        // return dd($request);
+        $size = count(collect($request)->get('nilai'));
+        for ($i = 0; $i < $size; $i++) {
+            $data[] = [
+                'user_id' => $request->user_id,
+                'soal_id' => $request->soal[$i],
+                'layanan_id' => $request->layanan_id,
+                'kategori_id' => $request->kategori_id,
+                'nilai' => $request->nilai[$request->soal[$i]],
+                'status' => 1,
+                'kritik' => $request->kritik,
+                'created_at' => Carbon::now()->setTimezone('Asia/Singapore'),
+                'updated_at' => Carbon::now()->setTimezone('Asia/Singapore'),
+            ];
+        }
+        Jawaban::insert($data);
+        return redirect('/jawaban')->with('status', 'Evaluasi anda berhasil masuk');
     }
 
     /**
