@@ -13,23 +13,19 @@
                     Import Excel
                   </button>
                   </div>
-                  <div class="pull">
+                  <div class="pull-right">
+                    
                     <!-- Date range -->
                     <form action="{{url('status')}}" method="post">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">
-                        <i class="far fa-calendar-alt"></i>
-                      </span>
-                    </div>
-                    <input name="cek" value="" type="text" placeholder="Rentang Tanggal" class="form-control float-right" id="reservation">
-                  </div>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-<button type="submit" class="btn btn-primary ">Submit</button>
-</form>
+                      @csrf 
+                      <div class="form-group">
+                        <label for="dari"> Dari Tanggal </label>
+                        <input type="date" name="dari" value="dd-mm-yyyy"> 
+                        <label for="sampai">    Sampai Tanggal </label>
+                        <input type="date" name="sampai" value="dd-mm-yyyy">		
+                        <button type="submit" value="FILTER" class="btn btn-primary ">Cek Status</button>
+                      </div>
+                    </form>
                 </div>
                   <!-- Import Excel -->
                   <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

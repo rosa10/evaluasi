@@ -16,18 +16,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			
+			<p hidden >{{$a=0}}</p>
 			@foreach ($soal as $key=>$datasoal)
-			@if ($datasoal->layanan_id==$kategori->layanan_id)
-				<p hidden> {{$jumlahsoallayanan=$datasoal->layanan_id}}</p>	
-			@endif
-			{{-- {{$datasoal}} --}}
+				@if ($datasoal->layanan_id==$kategori->layanan_id)
+					<p hidden> {{$a++}}</p>	
+				@endif
 			@endforeach
+
 			@foreach($jawaban as $key=>$dataJawaban)
 			<tr>
 				<td>{{$loop->iteration}}</td>			
 				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
-				<td>{{$responden=$dataJawaban->get()->count()/$jumlahsoallayanan}}</td>
+				<td>{{$responden=$dataJawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
 				<td>{{$jumlah/$responden}}</td>
 			</tr>
 			@endforeach
@@ -36,7 +36,7 @@
 
 </body>
 <center>
-<a href="{{url('/cetak/cetak_pdf')}}" class="btn btn-primary my-2">Cetak Laporan</a>
+<a href="{{url('/cetak/cetak_pdf',$kategori->id)}}" class="btn btn-primary my-2">Cetak Laporan</a>
 </center>
 </div>
 @endsection

@@ -20,7 +20,7 @@
 
             
 
-		<form method="post" action="{{url('layanan/create-kategori/'.$kategori->id)}}">
+		<form method="post" action="{{url('layanan/create-kategori/'.$layanan->id)}}">
 				@csrf
 				<div class="form-group">
 					<label for="kategori">Penanggungjawab</label>

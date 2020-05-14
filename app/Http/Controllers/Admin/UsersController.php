@@ -8,6 +8,8 @@ use App\Role;
 use App\Jawaban;
 use App\Layanan;
 use Gate;
+use DB;
+use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -157,31 +159,30 @@ class UsersController extends Controller
     }
     public function status(Request $request)
     {
-        // menangkap data pengecekan
-        $cek = $request->cek;
+        $users = DB::table('users')
+            ->whereDate('created_at', '>', $request->dari)
+            ->whereDate('created_at', '<', $request->sampai)
 
-        // mengambil data dari table pegawai sesuai pencarian data
-        $user = DB::table('user')
-            ->where('name', 'like', "%" . $cek . "%")
-            ->paginate();
+            ->get();
+        return $users;
 
-        // mengirim data pegawai ke view index
-        return view('index', ['pegawai' => $pegawai]);
 
-        $user->roles()->sync($request->roles);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $jawaban = Jawaban::all();
-        $layanan = Layanan::all();
-        $a = $layanan->id->collect();
-        foreach ($user as $user) {
-            if ($jawaban->user_id->contains('layanan_id', $a)) {
-                //bakal post 1 status di user_id
-                return redirect('admin/user')->with('warning', 'User ' . $request->name . ' berhasil di ubah');
-            } else {
-                //bakal post 0 status di user_id
-                $request->session()->flash('errorr', 'There was an error updating the user');
-            }
+        // $jawaban = DB::table('jawaban')
+        //     ->where('layanan_id', 3)
+        //     ->first();
+        // return $jawaban->user_id;
+
+        // $users = DB::table('users')
+        //     ->whereDate('created_at', '>', $request->dari)
+        //     ->whereDate('created_at', '<', $request->sampai)
+        //     ->update('status', 1);
+
+        foreach ($users as $user) {
+            echo $user->id;
         }
+        // if (($jawaban->status == 1)->whereIn('layanan_id', 3)) {
+        //     $users->update(['status' => 1]);
+        // };
+        // return redirect('admin/user')->with('users', $users);
     }
 }

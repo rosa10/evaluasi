@@ -1,6 +1,4 @@
-@extends('layouts/app')
-@section('title','Hasil Pengisian Layanan')
-@section('content')
+
 <div class="container">
 	<div class="row">
 		<div class="col-10"></div>
@@ -16,11 +14,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($jawaban as $p)
+			<p hidden >{{$a=0}}</p>
+			@foreach ($soal as $key=>$datasoal)
+				@if ($datasoal->layanan_id==$kategori->layanan_id)
+					<p hidden> {{$a++}}</p>	
+				@endif
+			@endforeach
+
+			@foreach($jawaban as $key=>$dataJawaban)
 			<tr>
-				<td>{{$loop->iteration}}</td>				
-				<td>{{$jumlah=$p->jawaban()->get()->sum('nilai')}}</td>
-				<td>{{$responden=$p->jawaban()->get()->count()}}</td>
+				<td>{{$loop->iteration}}</td>			
+				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
+				<td>{{$responden=$dataJawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
 				<td>{{$jumlah/$responden}}</td>
 			</tr>
 			@endforeach
@@ -28,8 +33,4 @@
 	</table>
 
 </body>
-<center>
-<a href="{{url('/cetak/cetak_pdf')}}" class="btn btn-primary my-2">Cetak Laporan</a>
-</center>
-</div>
-@endsection
+

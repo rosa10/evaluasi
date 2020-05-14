@@ -22,11 +22,15 @@ class CetakController extends Controller
         ]);
     }
 
-    public function cetak_pdf()
+    public function cetak_pdf(Kategori $kategori)
     {
         $jawaban = Jawaban::all();
-
-        $pdf = PDF::loadview('layanan.kategori.cetak_pdf', ['jawaban' => $jawaban]);
-        return $pdf->download('laporan-laporan-pdf');
+        $soal = Soal::all();
+        $layanan = Layanan::all();
+        $pdf = PDF::loadview('layanan.kategori.cetak_pdf', [
+            'layanan' => $layanan,  'kategori' => $kategori,
+            'jawaban' => $jawaban, 'soal' => $soal
+        ]);
+        return $pdf->download('laporan-laporan-pdf.pdf');
     }
 }
