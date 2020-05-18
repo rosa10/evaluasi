@@ -1,8 +1,14 @@
-
+<html>
+	<head>
+	<title>Hasil Pengisian Evaluasi</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
 <div class="container">
 	<div class="row">
 		<div class="col-10"></div>
-		<h1 class="mt-2">Daftar Soal</h1>
+	<h3 class="mt-2">Hasil Pengisian{{implode(', ',$kategori->layanan()->get()->pluck('layanan')->sort()->toArray())}}
+                          			{{$kategori->kategori}}</h3>
     </div>
     	<table class='table table-bordered'>
 		<thead>
@@ -20,17 +26,24 @@
 					<p hidden> {{$a++}}</p>	
 				@endif
 			@endforeach
-
-			@foreach($jawaban as $key=>$dataJawaban)
-			<tr>
-				<td>{{$loop->iteration}}</td>			
-				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
-				<td>{{$responden=$dataJawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
-				<td>{{$jumlah/$responden}}</td>
-			</tr>
+			<p hidden> {{$b=$a}} </p>
+			@foreach ($soal as $key=>$datasoal)
+				@foreach ($jawaban as $ajawaban)
+					@if ($b>0)
+						@if ($datasoal->id==$ajawaban->soal_id)
+							<tr>
+								<td>{{$loop->iteration}}</td>	
+								<td>{{$jumlah=$ajawaban->where('kategori_id',$kategori->id)->where('soal_id',$datasoal->id)->sum('nilai')}}</td>
+								<td>{{$responden=$ajawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
+								<td>{{$jumlah/$responden}}</td>
+							</tr>
+							<p hidden> {{$b--}}</p>
+						@endif
+					@endif
+				@endforeach
 			@endforeach
 		</tbody>
 	</table>
 
 </body>
-
+</html>

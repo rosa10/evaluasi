@@ -111,6 +111,7 @@
             <li><a href="{{url('layanan')}}"><i class="fa fa-edit"></i>Layanan</a></li>
             <li><a href="{{url('soal')}}"><i class="fa fa-database"></i>Soal</a></li>
             <li><a href="{{url('pilihan')}}"><i class="fa fa-bars"></i>Pilihan</a></li>
+            <li><a href="{{url('chart')}}"><i class="fa fa-bar-chart"></i>Hasil</a></li>
             @endcan
         </li>
       </ul>

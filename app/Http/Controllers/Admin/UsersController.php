@@ -159,12 +159,27 @@ class UsersController extends Controller
     }
     public function status(Request $request)
     {
+
+        $layanan = Layanan::all();
         $users = DB::table('users')
             ->whereDate('created_at', '>', $request->dari)
             ->whereDate('created_at', '<', $request->sampai)
 
-            ->get();
-        return $users;
+            ->get('id');
+        $jawaban = Jawaban::all()->where('user_id', 1);
+        echo $jawaban->all();
+        foreach ($users as $user) {
+
+
+            // foreach ($layanan as $layanan) {
+            //     echo $layanan;
+            // foreach ($jawaban as $jawaban) {
+            //     echo $jawaban;
+            // }
+            // }
+        }
+
+
 
 
         // $jawaban = DB::table('jawaban')
@@ -177,9 +192,6 @@ class UsersController extends Controller
         //     ->whereDate('created_at', '<', $request->sampai)
         //     ->update('status', 1);
 
-        foreach ($users as $user) {
-            echo $user->id;
-        }
         // if (($jawaban->status == 1)->whereIn('layanan_id', 3)) {
         //     $users->update(['status' => 1]);
         // };

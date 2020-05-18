@@ -24,7 +24,7 @@ class CetakController extends Controller
 
     public function cetak_pdf(Kategori $kategori)
     {
-        $jawaban = Jawaban::all();
+        $jawaban = $kategori->jawaban()->get();
         $soal = Soal::all();
         $layanan = Layanan::all();
         $pdf = PDF::loadview('layanan.kategori.cetak_pdf', [

@@ -1,11 +1,14 @@
 @extends('layouts/app')
 @section('title','Hasil Pengisian Layanan')
 @section('content')
-<div class="container">
-	<div class="row">
-		<div class="col-10"></div>
-		<h1 class="mt-2">Daftar Soal</h1>
-    </div>
+<div class="box">
+	<div class="box-header with-border">
+        <a href="{{url('layanan')}}" class="btn btn-danger my-2 ">Kembali</a>
+		<div class="box-tools pull-right">
+		</div>
+	</div>
+	<div class="box-body">
+		 
     	<table class='table table-bordered'>
 		<thead>
 			<tr>
@@ -22,14 +25,21 @@
 					<p hidden> {{$a++}}</p>	
 				@endif
 			@endforeach
-
-			@foreach($jawaban as $key=>$dataJawaban)
-			<tr>
-				<td>{{$loop->iteration}}</td>			
-				<td>{{$jumlah=$dataJawaban->sum('nilai')}}</td>
-				<td>{{$responden=$dataJawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
-				<td>{{$jumlah/$responden}}</td>
-			</tr>
+			<p hidden> {{$b=$a}} </p>
+			@foreach ($soal as $key=>$datasoal)
+				@foreach ($jawaban as $ajawaban)
+					@if ($b>0)
+						@if ($datasoal->id==$ajawaban->soal_id)
+							<tr>
+								<td>{{$loop->iteration}}</td>	
+								<td>{{$jumlah=$ajawaban->where('kategori_id',$kategori->id)->where('soal_id',$datasoal->id)->sum('nilai')}}</td>
+								<td>{{$responden=$ajawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
+								<td>{{$jumlah/$responden}}</td>
+							</tr>
+							<p hidden> {{$b--}}</p>
+						@endif
+					@endif
+				@endforeach
 			@endforeach
 		</tbody>
 	</table>
