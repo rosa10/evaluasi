@@ -25,7 +25,7 @@
 
                         @foreach($soal as $soal)
                         <tr>
-                          @if ($soal->layanan_id==$layanan->where('user_id',Auth::user()->id)->implode('id'))
+                          {{-- @if ($soal->layanan_id==$layanan->where('user_id',Auth::user()->id)->implode('id')) --}}
                         <th>{{$loop->iteration}}</th>
                           <th>
                             {{$layanan->where('id',$soal->layanan_id)->implode('layanan')}}
@@ -52,7 +52,7 @@
                           </th>
                           {{-- @endif --}}
                         </tr>
-                        @endif
+                        {{-- @endif --}}
                       @endforeach
                       <!-- Modal -->
                     <form action="" method="POST" id="deleteForm">

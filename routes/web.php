@@ -37,7 +37,8 @@ Route::get('/cetak/cetak_pdf/{kategori}', 'CetakController@cetak_pdf');
 //chart
 Route::get('/chart', 'ChartController@index');
 Route::get('/chart2', 'ChartController@chart');
-Route::get('/chart-data', 'ChartController@chartData');
+Route::get('/chart-data/{kategori}', 'ChartController@chartData');
+Route::get('/layanan/{layanan}/kategori', 'ChartController@getKategori');
 
 Route::resource('/kategori', 'KategoriController')->except('show', 'index', 'create', 'store');
 Route::resource('/soal', 'SoalController');

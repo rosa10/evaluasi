@@ -20,7 +20,10 @@
 		@csrf
           <div class="form-group">
 			<label for="layanan">Layanan</label>
-			<select for="layanan_id" id="layanan_id" name="layanan_id" class="form-control">
+			<select for="layanan_id" id="layanan_id" name="layanan_id" class="form-control" required>
+        <option selected disabled>
+          Pilih Layanan
+        </option>
 				@foreach ($layanan as $layanan)
 				<option  value="{{$layanan->id}}">
 					{{$layanan->layanan}}
@@ -30,19 +33,18 @@
         </div>
         <div class="form-group">
 			<label for="kategori">Kategori</label>
-			<select for="kategori_id" id="kategori_id" name="kategori_id" class="form-control">
-				@foreach ($kategori as $kategori)
-				<option  value="{{$kategori->id}}">
-					{{$kategori->kategori}}
+			<select for="kategori_id" id="kategori_id" name="kategori_id" class="form-control" required>
+
+				<option  selected disabled >
+          Pilih Kategori
 				</option>
-				@endforeach
 			</select>
         </div>
         <div class="form-group">
                         <label for="dari"> Dari Tanggal </label>
-                        <input type="date" name="dari" value="dd-mm-yyyy"> 
+                        <input type="date" name="dari" value="dd-mm-yyyy" required> 
                         <label for="sampai">    Sampai Tanggal </label>
-                        <input type="date" name="sampai" value="dd-mm-yyyy">		
+                        <input type="date" name="sampai" value="dd-mm-yyyy" required>		
                       </div>
         <button type="submit" class="btn btn-primary">Lihat Chart</button>
       </form>
@@ -54,4 +56,20 @@
     <!-- /.box-footer-->
   </div>
   <!-- /.box -->
+  @endsection
+  @section('javascript')
+    <script>
+      $(document).ready(function(){
+        $('select[name=layanan_id]').change(function(){
+          var url='{{url('layanan')}}'+'/'+$(this).val()+'/kategori';
+          $.get(url,function(data){
+            var select=$('#kategori_id');
+            select.empty();
+            $.each(data,function(key,value){
+              select.append('<option value='+value.id+'>'+value.kategori+'</option>');
+            });
+          });
+        });
+      });
+      </script>
   @endsection

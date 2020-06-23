@@ -22,6 +22,7 @@ class JawabanController extends Controller
      */
     public function home()
     {
+
         $layanan = Layanan::all();
         $kategori = Kategori::all();
         return view('jawaban.card', ['layanan' => $layanan], ['kategori' => $kategori]);

@@ -1,16 +1,46 @@
-<html>
-	<head>
-	<title>Hasil Pengisian Evaluasi</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+
+	<style>
+		body{
+			font-family:'Nunito', sans-serif;
+		}
+		p{
+			line-height: 1.5;
+		}
+		hr{
+			margin-top:1rem;
+			margin-bottom:1rem;
+			border: 0;
+			border-top:1px solid rgba(0,0,0,0.1);
+		}
+		h2{
+			line-height: 1.5;
+		}
+		table{
+			margin-bottom:1 rem;
+		}
+		.table td{
+			padding:0.75 rem;
+			vertical-align: top;
+		}
+		table {
+			border-collapse:collapse;
+			width:100%;
+		}
+		table, th,td{
+			border:1 px solid black;
+		}
+	</style>
 </head>
-<body>
-<div class="container">
-	<div class="row">
-		<div class="col-10"></div>
-	<h3 class="mt-2">Hasil Pengisian{{implode(', ',$kategori->layanan()->get()->pluck('layanan')->sort()->toArray())}}
-                          			{{$kategori->kategori}}</h3>
-    </div>
-    	<table class='table table-bordered'>
+<body style="font-size:0.85em; border-style:solid; padding:16px">
+	<table >
 		<thead>
 			<tr>
 				<th>ID Soal</th>
@@ -20,30 +50,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			<p hidden >{{$a=0}}</p>
-			@foreach ($soal as $key=>$datasoal)
-				@if ($datasoal->layanan_id==$kategori->layanan_id)
-					<p hidden> {{$a++}}</p>	
-				@endif
-			@endforeach
-			<p hidden> {{$b=$a}} </p>
-			@foreach ($soal as $key=>$datasoal)
-				@foreach ($jawaban as $ajawaban)
-					@if ($b>0)
-						@if ($datasoal->id==$ajawaban->soal_id)
-							<tr>
-								<td>{{$loop->iteration}}</td>	
-								<td>{{$jumlah=$ajawaban->where('kategori_id',$kategori->id)->where('soal_id',$datasoal->id)->sum('nilai')}}</td>
-								<td>{{$responden=$ajawaban->where('kategori_id',$kategori->id)->get()->count()/$a}}</td>
-								<td>{{$jumlah/$responden}}</td>
-							</tr>
-							<p hidden> {{$b--}}</p>
-						@endif
-					@endif
-				@endforeach
-			@endforeach
+			<tr>
+				<td>{{$loop->iteration}}</td>
+				<td>{{}}</td>
+				<td></td>
+				<td></td>
+			</tr>
 		</tbody>
 	</table>
-
+	
 </body>
 </html>

@@ -9,6 +9,7 @@ use App\Soal;
 use App\Kategori;
 use App\Layanan;
 use App\Pilihan;
+use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
 
@@ -19,26 +20,32 @@ class ChartController extends Controller
 
         $layanan = Layanan::all();
         $kategori = Kategori::all();
-        return view('chart.chart', [
+        return view('Chart.Chart', [
             'layanan' => $layanan,
             'kategori' => $kategori
         ]);
     }
+
     public function chart(Request $request)
     {
 
-        $soal = Soal::all();
-
+        $soal = Soal::where('layanan_id', $request->layanan_id)->get();
 
         return view('Chart.Chart2', [
             'soal' => $soal,
+            'kategori' => $request->kategori_id,
+            'dari' => $request->dari,
+            'sampai' => $request->sampai
         ]);
     }
 
-    public function chartData()
+    public function chartData(Kategori $kategori, Request $request)
     {
-        $soal = Soal::all();
+
+        $soal = Soal::where('layanan_id', $kategori->layanan->id)->get();
         $namaSoal = [];
+        $dari = new Carbon($request->dari);
+        $sampai = new Carbon($request->sampai);
 
         foreach ($soal as $itemSoal) {
             $pilihan = [];
@@ -46,7 +53,7 @@ class ChartController extends Controller
 
             foreach ($itemSoal->pilihan as $itemPilihan) {
                 array_push($pilihan, $itemPilihan->pilihan);
-                array_push($nilai,  $itemSoal->jawaban->where('nilai', $itemPilihan->value)->count());
+                array_push($nilai,  $itemSoal->jawaban()->where('nilai', $itemPilihan->value)->where('kategori_id', $kategori->id)->whereBetween('created_at', [$dari, $sampai])->count());
             }
 
             array_push($namaSoal, [
@@ -59,5 +66,9 @@ class ChartController extends Controller
         return response()->json([
             'soal' => $namaSoal
         ]);
+    }
+    public function getKategori(Layanan $layanan)
+    {
+        return $layanan->kategori()->select('id', 'kategori')->get();
     }
 }

@@ -13,12 +13,10 @@ class CetakController extends Controller
 {
     public function index(Kategori $kategori)
     {
-        $jawaban = $kategori->jawaban()->get();
-        $soal = Soal::all();
-        $layanan = Layanan::all();
+        $jawaban = $kategori->jawaban;
+
         return view('layanan.kategori.cetak', [
-            'layanan' => $layanan,  'kategori' => $kategori,
-            'jawaban' => $jawaban, 'soal' => $soal
+            'jawaban' => $jawaban
         ]);
     }
 

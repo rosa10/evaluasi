@@ -14,14 +14,25 @@
     <div class="box-body">
 
 		<div class="row">
-		    @foreach ($soal as $key => $item)
+            @foreach ($soal as $key => $item)
+            @if(count($item->pilihan) > 4)
+            <div class="col-md-12" align="center">
+                <br>
+                <div id="lebar" style="width: 600px">
+		        <b>{{$item->soal}}</b>
+		        <canvas id="chart{{$key}}" class="chart"></canvas>
+		        <progress id="animationProgress{{$key}}" max="1" value="0" style="width: 100%; height: 5px"> </progress>
+                </div>
+            </div>
+            @else
 		    <div class="col-md-6">
 				<br>
 		        <b>{{$item->soal}}</b>
 		        <canvas id="chart{{$key}}" class="chart" width="400" height="300"></canvas>
 		        <progress id="animationProgress{{$key}}" max="1" value="0" style="width: 100%; height: 5px"> </progress>
 
-		    </div>
+            </div>
+            @endif
 		    @endforeach
 		</div>
 		
@@ -37,12 +48,14 @@
 	
 		var chartCount = document.getElementsByClassName('chart');
 		Chart.defaults.global.defaultFontSize = 10;
+        var kategori = {{$kategori}};
+        var dari = "{{$dari}}";
+        var sampai = "{{$sampai}}";
+
 		for (let index = 0; index < chartCount.length; index++) {
 			
-			
-			
 			$.ajax({
-				url: '{{url('chart-data')}}',
+				url: '{{url('chart-data')}}' + '/' +kategori+ '?dari='+dari+'&sampai='+sampai,
 				method: "GET",
 				success: function(data){
 					console.log(data['soal'][index].nilai);
