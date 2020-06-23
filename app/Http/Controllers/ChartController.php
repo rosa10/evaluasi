@@ -8,39 +8,56 @@ use App\Jawaban;
 use App\Soal;
 use App\Kategori;
 use App\Layanan;
+use App\Pilihan;
 use DB;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
 {
-    public function index(Kategori $kategori)
+    public function index()
     {
-        $jawaban = Jawaban::all();
-        $soal = Soal::all();
+
         $layanan = Layanan::all();
-        $user = User::all();
-        $chart = new Charts;
-        // $a = 0;
-        // foreach ($soal as $datasoal) {
-        //     if ($datasoal->layanan_id == $kategori->layanan_id) {
-        //         $a++;
-        //     }
-        // }
-        $c[] = 0;
-        foreach ($user as $user) {
-            $c[]++;
-            // $jumlah = $dataJawaban->sum('nilai');
-            // $responden = $dataJawaban->where('kategori_id', $kategori->id)->get()->count() / $a;
-            // $jumlah / $responden;
+        $kategori = Kategori::all();
+        return view('chart.chart', [
+            'layanan' => $layanan,
+            'kategori' => $kategori
+        ]);
+    }
+    public function chart(Request $request)
+    {
+
+        $soal = Soal::all();
+
+
+        return view('Chart.Chart2', [
+            'soal' => $soal,
+        ]);
+    }
+
+    public function chartData()
+    {
+        $soal = Soal::all();
+        $namaSoal = [];
+
+        foreach ($soal as $itemSoal) {
+            $pilihan = [];
+            $nilai = [];
+
+            foreach ($itemSoal->pilihan as $itemPilihan) {
+                array_push($pilihan, $itemPilihan->pilihan);
+                array_push($nilai,  $itemSoal->jawaban->where('nilai', $itemPilihan->value)->count());
+            }
+
+            array_push($namaSoal, [
+                'soal' => $itemSoal->soal,
+                'pilihan' => $pilihan,
+                'nilai' => $nilai
+            ]);
         }
 
-        // foreach ($user as $user) {
-        //     $b[] = $user->id;
-        // }
-
-        $chart->labels($c);
-        $chart->dataset('My dataset', 'bar', [1, 2, 3, 4]);
-        // $chart->dataset('My dataset 2', 'line', [4, 3, 2, 1]);
-        return view('Chart.Chart', compact('chart'));
+        return response()->json([
+            'soal' => $namaSoal
+        ]);
     }
 }

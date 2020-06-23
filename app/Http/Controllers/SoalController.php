@@ -16,8 +16,9 @@ class SoalController extends Controller
      */
     public function index()
     {
-        $soal=Soal::all();
-        return view('soal.index')->with('soal',$soal);
+        $layanan = Layanan::all();
+        $soal = Soal::all();
+        return view('soal.index', ['soal' => $soal, 'layanan' => $layanan]);
     }
 
     /**
@@ -27,9 +28,9 @@ class SoalController extends Controller
      */
     public function create()
     {
-        $pilihan=Pilihan::all();
-        $layanan=Layanan::all();
-        return view ('soal.create',[
+        $pilihan = Pilihan::all();
+        $layanan = Layanan::all();
+        return view('soal.create', [
             'layanan' => $layanan,
             'pilihan' => $pilihan
 
@@ -45,11 +46,13 @@ class SoalController extends Controller
     public function store(Request $request)
     {
         $soal = Soal::create([
-            'layanan_id'=>$request->layanan_id,
+            'dari' => $request->dari,
+            'sampai' => $request->sampai,
+            'layanan_id' => $request->layanan_id,
             'soal' => $request->soal,
         ]);
         $soal->pilihan()->sync($request->pilihan);
-        return redirect('/soal')-> with('status','Indikator Berhasil Ditambah');
+        return redirect('/soal')->with('status', 'Indikator Berhasil Ditambah');
     }
 
     /**
@@ -71,12 +74,12 @@ class SoalController extends Controller
      */
     public function edit(Soal $soal)
     {
-        $pilihan=Pilihan::all();
-        $layanan=Layanan::all();
+        $pilihan = Pilihan::all();
+        $layanan = Layanan::all();
         return view('soal.edit', [
             'soal' => $soal,
             'pilihan' => $pilihan,
-            'layanan'=>$layanan,
+            'layanan' => $layanan,
         ]);
     }
 
@@ -91,11 +94,13 @@ class SoalController extends Controller
     {
         $soal->pilihan()->sync($request->pilihan);
         Soal::where('id', $soal->id)
-                    ->update([
-                        'layanan_id'=>$request->layanan_id,
-                        'soal' => $request->soal,
-                    ]);       
-        return redirect('/soal')-> with('status','Indikator Berhasil Diubah');
+            ->update([
+                'dari' => $request->dari,
+                'sampai' => $request->sampai,
+                'layanan_id' => $request->layanan_id,
+                'soal' => $request->soal,
+            ]);
+        return redirect('/soal')->with('status', 'Indikator Berhasil Diubah');
     }
 
     /**
@@ -107,6 +112,6 @@ class SoalController extends Controller
     public function destroy(Soal $soal)
     {
         Soal::destroy($soal->id);
-        return redirect('/soal')-> with('status','Indikator Berhasil Dihapus');
+        return redirect('/soal')->with('status', 'Indikator Berhasil Dihapus');
     }
 }

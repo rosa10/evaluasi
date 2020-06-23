@@ -1,34 +1,41 @@
 @extends('layouts/app')
 @section('title','Edit Evaluasi ITK')
+@section('page-title','Pertanyaan')
 @section('content')
 <div class="box">
     <div class="box-header with-border">
-      <a href="{{url('soal/create')}}" class="btn btn-primary my-2 ">Tambah Soal</a>
+      <a href="{{url('soal/create')}}" class="btn btn-primary my-2 ">Tambah Pertanyaan</a>
             <div class="box-tools pull-right">
             </div></div>
                 <div class="box-body">
                    <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">No.</th>
                         <th scope="col">Layanan</th>
-                        <th scope="col">Soal</th>
-                        <th scope="col">Pilihan</th>
+                        <th scope="col">Pertanyaan</th>
+                        <th width="200px" scope="col">Pilihan</th>
+                        <th scope="col">Berlaku Dari</th>
+                        <th scope="col">Berlaku Sampai</th>
 						            <th scope="col"width="160px">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
+                      
+
                         @foreach($soal as $soal)
                         <tr>
+                          @if ($soal->layanan_id==$layanan->where('user_id',Auth::user()->id)->implode('id'))
                         <th>{{$loop->iteration}}</th>
                           <th>
-                            {{implode(', ',$soal->layanan()->get()->pluck('layanan')->sort()->toArray())}}
+                            {{$layanan->where('id',$soal->layanan_id)->implode('layanan')}}
                           </th>
                           <th>{{$soal->soal}}</th>
                           <th>
                             {{implode(', ',$soal->pilihan()->get()->pluck('pilihan')->sort()->toArray())}}
                           </th>
-				                  
+                          <th>{{$soal->dari}}</th>
+                          <th>{{$soal->sampai}}</th>
                           <th>
                             <a href="{{route('soal.edit',$soal->id)}}" class="pull-left">
                               <button type="button" class="btn btn-primary btn-sm">Edit</button>
@@ -43,7 +50,9 @@
                                 </button>
                             </form>
                           </th>
+                          {{-- @endif --}}
                         </tr>
+                        @endif
                       @endforeach
                       <!-- Modal -->
                     <form action="" method="POST" id="deleteForm">
@@ -90,7 +99,7 @@
               var url = $(this).attr('data-url');
               var nama = $(this).attr('data-name');
               console.log(nama);
-              $("#modalHapusData").find(".modal-body").text("Apakah anda ingin menghapus soal " + nama + "?");
+              $("#modalHapusData").find(".modal-body").text("Apakah anda ingin menghapus pertanyaan " + nama + "?");
               $("#deleteForm").attr("action", url);
           });
       });

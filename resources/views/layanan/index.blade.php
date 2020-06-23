@@ -1,5 +1,6 @@
 @extends('layouts/app')
 @section('title','Edit Evaluasi ITK')
+@section('page-title','Layanan')
 @section('content')
 <div class="box">
     <div class="box-header with-border">
@@ -11,20 +12,25 @@
                    <table class="table">
                     <thead>
                       <tr>
-                        <th scope="col">#</th>
-                        {{-- <th scope="col">User</th> --}}
+                        <th scope="col">No.</th>
+                        <th scope="col">Penanggungjawab</th>
                         <th scope="col">Layanan</th>
                         <th scope="col">Kode Layanan</th>
 						            <th scope="col"width="250px">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
+                      
+                      
+                      
                         @foreach($layanan as $layanan)
+                        
+                        @if (Auth::user()->name==implode(', ',$layanan->user()->get()->pluck('name')->sort()->toArray())) 
                         <tr>
                         <td>{{$loop->iteration}}</td>
-                          {{-- <td>
+                          <td>
                             {{implode(', ',$layanan->user()->get()->pluck('name')->sort()->toArray())}}
-                          </td> --}}
+                          </td>
                           <td>{{$layanan->layanan}}</td>
                           <td>{{$layanan->id}}</td>
                           <td class="pull-left">
@@ -48,6 +54,7 @@
                           
                         </tr>
                       </tr>
+                      @endif
                       @endforeach
 
                       <!-- Modal -->

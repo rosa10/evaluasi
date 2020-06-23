@@ -11,6 +11,7 @@
 		@method('post')
 		@csrf
 		<div class="form-group">
+			<label for="layanan">Layanan</label>
 			<select for="layanan_id" id="layanan_id" name="layanan_id" class="form-control">
 				@foreach ($layanan as $layanan)
 				<option  value="{{$layanan->id}}"> 
@@ -20,9 +21,15 @@
 			</select>
 		</div>
 		<div class="form-group">
-			<label for="soal">Soal</label>
+			<label for="soal">Pertanyaan</label>
 			<input type="text" class="form-control" id="soal" placeholder="Masukkan indikator" name="soal">
 		</div>
+		 <div class="form-group">
+                        <label for="dari"> Dari Tanggal </label>
+                        <input type="date" name="dari" value="dd-mm-yyyy"> 
+                        <label for="sampai">    Sampai Tanggal </label>
+                        <input type="date" name="sampai" value="dd-mm-yyyy">		
+                      </div>
 		<div class="form-group">
 			<label for="checkbox">Pilihan</label>
 			<br>

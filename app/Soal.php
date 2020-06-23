@@ -16,4 +16,9 @@ class Soal extends Model
     {
         return $this->belongsToMany('App\Pilihan');
     }
+
+    public function jawaban()
+    {
+        return $this->hasMany('App\Jawaban');
+    }
 }

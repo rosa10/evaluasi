@@ -159,42 +159,34 @@ class UsersController extends Controller
     }
     public function status(Request $request)
     {
-
         $layanan = Layanan::all();
-        $users = DB::table('users')
+        $jawaban = DB::table('jawaban')
             ->whereDate('created_at', '>', $request->dari)
             ->whereDate('created_at', '<', $request->sampai)
-
-            ->get('id');
-        $jawaban = Jawaban::all()->where('user_id', 1);
-        echo $jawaban->all();
-        foreach ($users as $user) {
-
-
-            // foreach ($layanan as $layanan) {
-            //     echo $layanan;
-            // foreach ($jawaban as $jawaban) {
-            //     echo $jawaban;
-            // }
-            // }
+            ->get();
+        foreach ($layanan as $layanan) {
+            $lay[] = $layanan->id;
         }
-
-
-
-
-        // $jawaban = DB::table('jawaban')
-        //     ->where('layanan_id', 3)
-        //     ->first();
-        // return $jawaban->user_id;
-
-        // $users = DB::table('users')
-        //     ->whereDate('created_at', '>', $request->dari)
-        //     ->whereDate('created_at', '<', $request->sampai)
-        //     ->update('status', 1);
-
-        // if (($jawaban->status == 1)->whereIn('layanan_id', 3)) {
-        //     $users->update(['status' => 1]);
-        // };
-        // return redirect('admin/user')->with('users', $users);
+        foreach ($jawaban as $jawaban) {
+            $a[$jawaban->user_id][] = $jawaban->layanan_id;
+        }
+        $b = array_keys($a);
+        $g = 0;
+        foreach ($a as $a) {
+            $arr3 = array_diff($lay, $a);
+            if (count($arr3) == 0) {
+                // $q[] = 1;
+                $user = DB::table('users')
+                    ->where('id', $b[$g])
+                    ->update(['status' => 1]);
+            } else {
+                // $q[] = 0;
+                $user = DB::table('users')
+                    ->where('id', $b[$g])
+                    ->update(['status' => 0]);
+            }
+            $g++;
+        }
+        return redirect('admin/user')->with('users', $user);
     }
 }

@@ -22,16 +22,7 @@
 
 		<form method="post" action="{{url('layanan/create-kategori/'.$layanan->id)}}">
 				@csrf
-				<div class="form-group">
-					<label for="kategori">Penanggungjawab</label>
-					<select for="user_id" id="user_id" name="user_id" class="form-control">
-						@foreach ($user as $user)
-						<option  value="{{$user->id}}"> 
-							{{$user->name}}
-						</option>
-						@endforeach
-					</select>
-				</div>
+				
 				<div class="form-group">
 					<label for="kategori">Kategori</label>
 					<input type="text" name="kategori" class="form-control @error('kategori') is-invalid @enderror" id="kategori" placeholder="Masukkan kategori layanan">
@@ -62,6 +53,7 @@
 					<tr>
 						<th>No</th>
 						<th>Kategori</th>
+						{{-- <th>Penanggungjawab</th> --}}
 						<th>Aksi</th>
 					</tr>
 				</th>
@@ -71,6 +63,7 @@
 					<tr>
 						<td>{{$kategori->firstItem() + $key}}</td>
 						<td>{{$dataKategori->kategori}}</td>
+						{{-- <td>{{implode(', ',$dataKategori->user()->get()->pluck('name')->sort()->toArray())}}</td> --}}
 						<td>
 						<a href="{{url('cetak',$dataKategori->id)}}" class="d-inline p-2">
 								<button type="button" class="btn btn-info btn-sm">Cetak Laporan</button>

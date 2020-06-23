@@ -8,7 +8,17 @@
 	<form method="post" action="{{route('layanan.update',$layanan->id)}}">
 		@method('put')
 		@csrf
-		
+		<div class="form-group">
+            <label for="kategori">Penanggungjawab</label>
+			<select for="user_id" id="user_id" name="user_id" class="form-control">
+				@foreach ($user as $user)
+				<option  value="{{$user->id}}"
+					@if ($layanan->user()->get()->pluck('id')->contains($user->id)) selected @endif> 
+					{{$user->name}}
+				</option>
+				@endforeach
+			</select>
+			</div>
 		<div class="form-group">
 			<label for="layanan">Layanan</label>
 			<input type="text" class="form-control" id="layanan" placeholder="Masukkan layanan" name="layanan"value="{{$layanan->layanan}}">

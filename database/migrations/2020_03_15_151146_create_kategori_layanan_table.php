@@ -15,8 +15,7 @@ class CreateKategoriLayananTable extends Migration
     {
         Schema::create('kategori_layanan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->unsignedBigInteger('layanan_id');
             $table->foreign('layanan_id')->references('id')->on('layanan')->onDelete('cascade');
             $table->string('kategori');

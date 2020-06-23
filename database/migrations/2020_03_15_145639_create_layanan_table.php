@@ -15,6 +15,8 @@ class CreateLayananTable extends Migration
     {
         Schema::create('layanan', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('layanan');
             $table->timestamps();
         });

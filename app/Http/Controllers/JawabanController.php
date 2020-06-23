@@ -11,6 +11,7 @@ use App\User;
 use App\Kategori;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class JawabanController extends Controller
 {
@@ -31,19 +32,14 @@ class JawabanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Kategori $kategori)
     {
-        // return dd($request);
-        $soal = Soal::all();
-        $pilihan = Pilihan::orderBy('value', 'desc')->get();
-        $pilihan_soal = Pilihan_soal::all();
-        $user = User::all();
-        $layanan = Layanan::all();
-        $kategori = Kategori::all();
+        $layanan = $kategori->layanan;
+        $soal = $layanan->soal()->get();
+
         return view('jawaban.index', [
-            'layanan' => $layanan, 'kategori' => $kategori,
-            'request' => $request, 'soal' => $soal, 'pilihan' => $pilihan,
-            'pilihan_soal' => $pilihan_soal, 'user' => $user
+            'soal' => $soal,
+            'kategori' => $kategori
         ]);
     }
 
@@ -53,16 +49,18 @@ class JawabanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Kategori $kategori)
     {
         // return dd($request);
+        $userId = Auth::user()->id;
+
         $size = count(collect($request)->get('nilai'));
         for ($i = 0; $i < $size; $i++) {
             $data[] = [
-                'user_id' => $request->user_id,
+                'user_id' => $userId,
                 'soal_id' => $request->soal[$i],
-                'layanan_id' => $request->layanan_id,
-                'kategori_id' => $request->kategori_id,
+                'layanan_id' => $kategori->layanan->id,
+                'kategori_id' => $kategori->id,
                 'nilai' => $request->nilai[$request->soal[$i]],
                 'status' => 1,
                 'kritik' => $request->kritik,
@@ -71,7 +69,7 @@ class JawabanController extends Controller
             ];
         }
         Jawaban::insert($data);
-        return redirect('/jawaban')->with('status', 'Evaluasi anda berhasil masuk');
+        return redirect('/jawaban')->with('success', 'Evaluasi anda' . ' berhasil ditambahkan');
     }
 
     /**

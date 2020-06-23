@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\User;
 use App\Layanan;
 use Illuminate\Http\Request;
@@ -14,8 +15,9 @@ class LayananController extends Controller
      */
     public function index()
     {
-        $layanan=Layanan::all();
-        return view('layanan.index')->with('layanan',$layanan);
+        $user = User::all();
+        $layanan = Layanan::all();
+        return view('layanan.index', ['layanan' => $layanan], ['user' => $user]);
     }
 
     /**
@@ -25,8 +27,8 @@ class LayananController extends Controller
      */
     public function create()
     {
-        
-        return view ('layanan.create');
+        $user = User::all();
+        return view('layanan.create')->with('user', $user);
     }
 
     /**
@@ -38,7 +40,7 @@ class LayananController extends Controller
     public function store(Request $request)
     {
         Layanan::create($request->all());
-        return redirect('/layanan')-> with('success','Layanan '.$request->layanan.' berhasil Ditambah');
+        return redirect('/layanan')->with('success', 'Layanan ' . $request->layanan . ' berhasil Ditambah');
     }
 
     /**
@@ -49,8 +51,8 @@ class LayananController extends Controller
      */
     public function show(Layanan $layanan)
     {
-        $layanan=Layanan::all();
-        return view('layanan/show',['layanan'=>$layanan]);
+        $layanan = Layanan::all();
+        return view('layanan/show', ['layanan' => $layanan]);
     }
 
     /**
@@ -61,8 +63,8 @@ class LayananController extends Controller
      */
     public function edit(Layanan $layanan)
     {
-        
-        return view('layanan.edit', compact('layanan'));
+        $user = User::all();
+        return view('layanan.edit', compact('layanan'))->with('user', $user);
     }
 
     /**
@@ -76,8 +78,7 @@ class LayananController extends Controller
     {
         // $layanan=findOrFail($id);
         $layanan->update($request->all());
-        return redirect('/layanan')-> with('status','Indikator Berhasil Diubah');
-        
+        return redirect('/layanan')->with('warning', 'Layanan ' . $request->layanan . ' berhasil di ubah');
     }
 
     /**
@@ -89,6 +90,6 @@ class LayananController extends Controller
     public function destroy(Layanan $layanan)
     {
         Layanan::destroy($layanan->id);
-        return redirect('/layanan')-> with('status','Indikator Berhasil Dihapus');
+        return redirect('/layanan')->with('errorr', 'Layanan ' . $layanan->layanan . ' berhasil dihapus');
     }
 }

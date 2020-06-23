@@ -36,7 +36,8 @@ Route::get('/cetak/cetak_pdf/{kategori}', 'CetakController@cetak_pdf');
 
 //chart
 Route::get('/chart', 'ChartController@index');
-Route::get('/chart/{kategori}', 'ChartController@chart');
+Route::get('/chart2', 'ChartController@chart');
+Route::get('/chart-data', 'ChartController@chartData');
 
 Route::resource('/kategori', 'KategoriController')->except('show', 'index', 'create', 'store');
 Route::resource('/soal', 'SoalController');
@@ -44,8 +45,8 @@ Route::resource('/pilihan', 'PilihanController');
 
 // evaluasi mahasiswa
 Route::get('/jawaban', 'JawabanController@home');
-Route::post('/jawaban/index', 'JawabanController@index');
-Route::post('/jawaban/store', 'JawabanController@store');
+Route::get('/jawaban/index/{kategori}', 'JawabanController@index');
+Route::post('/jawaban/store/{kategori}', 'JawabanController@store');
 
 //excel
 // Route::get('/user/export_excel', 'Admin\UsersController@export_excel');

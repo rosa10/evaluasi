@@ -6,6 +6,8 @@
   <title>@yield('title')</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  
   <!-- Bootstrap 3.3.6 -->
   <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
@@ -18,7 +20,7 @@
   <!-- daterange picker -->
   <link rel="stylesheet" href="{{asset('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- Bootstrap Color Picker -->
-  <link rel="stylesheet" href="{{asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}">
+  {{-- <link rel="stylesheet" href="{{asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css')}}"> --}}
 
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
@@ -52,8 +54,8 @@
                 <img src="{{asset('dist/img/itkitk.jpg')}}" class="img-circle" alt="User Image">
 
                 <p>
-                  {{Auth::user()->name}} - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{Auth::user()->name}} - {{Auth::user()->email}}
+                  <small>Institut Teknologi Kalimantan</small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -109,7 +111,7 @@
             
             @can('manage-survey')
             <li><a href="{{url('layanan')}}"><i class="fa fa-edit"></i>Layanan</a></li>
-            <li><a href="{{url('soal')}}"><i class="fa fa-database"></i>Soal</a></li>
+            <li><a href="{{url('soal')}}"><i class="fa fa-database"></i>Pertanyaan</a></li>
             <li><a href="{{url('pilihan')}}"><i class="fa fa-bars"></i>Pilihan</a></li>
             <li><a href="{{url('chart')}}"><i class="fa fa-bar-chart"></i>Hasil</a></li>
             @endcan
@@ -140,6 +142,7 @@
     </div>
     <strong> <a class="fa fa-copyright"href="#">Institut Teknologi Kalimantan</a></strong>
   </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="{{asset('plugins/jQuery/jquery-2.2.3.min.js')}}"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="{{asset('bootstrap/js/bootstrap.min.js')}}"></script>
@@ -151,13 +154,15 @@
 <script src="{{asset('/plugins/moment/moment.min.js')}}"></script>
 <script src="{{asset('/plugins/inputmask/min/jquery.inputmask.bundle.min.js')}}"></script>
 <!-- bootstrap color picker -->
-<script src="{{asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script>
+{{-- <script src="{{asset('plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js')}}"></script> --}}
 <!-- FastClick -->
 <script src="{{asset('plugins/fastclick/fastclick.js')}}"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('dist/js/app.min.js')}}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{asset('dist/js/demo.js')}}"></script>
+<!-- Chart JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
 
 @yield('javascript')
 </body>

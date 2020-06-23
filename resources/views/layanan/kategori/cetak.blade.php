@@ -19,6 +19,7 @@
 			</tr>
 		</thead>
 		<tbody>
+			{{-- variabel a itu untuk jumlah soal berdasarkan layanan --}}
 			<p hidden >{{$a=0}}</p>
 			@foreach ($soal as $key=>$datasoal)
 				@if ($datasoal->layanan_id==$kategori->layanan_id)

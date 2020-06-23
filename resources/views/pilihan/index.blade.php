@@ -1,5 +1,6 @@
 @extends('layouts/app')
 @section('title','Edit Evaluasi ITK')
+@section('page-title','Pilihan Pertanyaan')
 @section('content')
 <div class="box">
     <div class="box-header with-border">

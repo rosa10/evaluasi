@@ -8,7 +8,10 @@ class Layanan extends Model
 {
     protected $table = 'layanan';
     protected $guarded = [];
-
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
     public function kategori()
     {
         return $this->hasMany('App\Kategori');
@@ -16,5 +19,10 @@ class Layanan extends Model
     public function jawaban()
     {
         return $this->hasMany('App\Jawaban');
+    }
+
+    public function soal()
+    {
+        return $this->hasMany('App\Soal');
     }
 }

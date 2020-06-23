@@ -36,25 +36,27 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function roles(){
+    public function roles()
+    {
         return $this->belongsToMany('App\Role');
     }
-    public function hasAnyRoles($roles){
-        if($this->roles()->whereIn('name',$roles)->first()){
+    public function hasAnyRoles($roles)
+    {
+        if ($this->roles()->whereIn('name', $roles)->first()) {
             return true;
         }
         return false;
-        
     }
-    public function hasRole($role){
-        if($this->roles()->where('name',$role)->first()){
+    public function hasRole($role)
+    {
+        if ($this->roles()->where('name', $role)->first()) {
             return true;
         }
         return false;
-        
     }
 
-    public function kategori(){
-        return $this->hasOne('App\Kategori', 'user_id');
+    public function layanan()
+    {
+        return $this->hasMany('App\Layanan');
     }
 }
