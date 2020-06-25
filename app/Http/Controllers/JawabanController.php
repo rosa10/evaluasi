@@ -24,8 +24,16 @@ class JawabanController extends Controller
     {
 
         $layanan = Layanan::all();
-        $kategori = Kategori::all();
-        return view('jawaban.card', ['layanan' => $layanan], ['kategori' => $kategori]);
+        $tahunSekarang = Carbon::now()->format('Y');
+        $bulan = Carbon::now()->format('m');
+        $user = Auth::user()->id;
+        // dd($bulan);
+        return view('jawaban.card', [
+            'layanan' => $layanan,
+            'tahunSekarang' => $tahunSekarang,
+            'bulanSekarang' => $bulan,
+            'user' => $user
+        ]);
     }
 
     /**
@@ -35,12 +43,25 @@ class JawabanController extends Controller
      */
     public function index(Kategori $kategori)
     {
+        $user = Auth::user()->id;
+        $tahunSekarang = Carbon::now()->format('Y');
+        if ($kategori->jawaban->where('user_id', $user)->pluck('genap')->first() == 1) {
+            if ($tahunSekarang == $kategori->where('user_id', $user)->pluck('tahun')->first()) {
+                return back();
+            }
+        }
+        if ($kategori->jawaban->where('user_id', $user)->pluck('ganjil')->first() == 1) {
+            if ($tahunSekarang == $kategori->jawaban->where('user_id', $user)->pluck('tahun')->first()) {
+                return back();
+            }
+        }
+
         $layanan = $kategori->layanan;
         $soal = $layanan->soal()->get();
 
         return view('jawaban.index', [
             'soal' => $soal,
-            'kategori' => $kategori
+            'kategori' => $kategori,
         ]);
     }
 
@@ -54,6 +75,18 @@ class JawabanController extends Controller
     {
         // return dd($request);
         $userId = Auth::user()->id;
+        $bulanSekarang = Carbon::now()->format('m');
+        $tahunSekarang = Carbon::now()->format('Y');
+        $ganjil = 0;
+        $genap = 0;
+
+        if ($bulanSekarang >= 1 && $bulanSekarang <= 6) {
+            $genap = 1;
+        }
+
+        if ($bulanSekarang >= 7 && $bulanSekarang <= 12) {
+            $ganjil = 1;
+        }
 
         $size = count(collect($request)->get('nilai'));
         for ($i = 0; $i < $size; $i++) {
@@ -65,11 +98,16 @@ class JawabanController extends Controller
                 'nilai' => $request->nilai[$request->soal[$i]],
                 'status' => 1,
                 'kritik' => $request->kritik,
+                'ganjil' => $ganjil,
+                'genap' => $genap,
+                'tahun' => $tahunSekarang,
                 'created_at' => Carbon::now()->setTimezone('Asia/Singapore'),
-                'updated_at' => Carbon::now()->setTimezone('Asia/Singapore'),
+                'updated_at' => Carbon::now()->setTimezone('Asia/Singapore')
             ];
         }
+
         Jawaban::insert($data);
+
         return redirect('/jawaban')->with('success', 'Evaluasi anda' . ' berhasil ditambahkan');
     }
 

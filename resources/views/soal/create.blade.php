@@ -24,12 +24,7 @@
 			<label for="soal">Pertanyaan</label>
 			<input type="text" class="form-control" id="soal" placeholder="Masukkan indikator" name="soal">
 		</div>
-		 <div class="form-group">
-                        <label for="dari"> Dari Tanggal </label>
-                        <input type="date" name="dari" value="dd-mm-yyyy"> 
-                        <label for="sampai">    Sampai Tanggal </label>
-                        <input type="date" name="sampai" value="dd-mm-yyyy">		
-                      </div>
+		 
 		<div class="form-group">
 			<label for="checkbox">Pilihan</label>
 			<br>

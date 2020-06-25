@@ -49,13 +49,13 @@
 		var chartCount = document.getElementsByClassName('chart');
 		Chart.defaults.global.defaultFontSize = 10;
         var kategori = {{$kategori}};
-        var dari = "{{$dari}}";
-        var sampai = "{{$sampai}}";
+        var periode = "{{$periode}}";
+        var tahun = "{{$tahun}}";
 
 		for (let index = 0; index < chartCount.length; index++) {
 			
 			$.ajax({
-				url: '{{url('chart-data')}}' + '/' +kategori+ '?dari='+dari+'&sampai='+sampai,
+				url: '{{url('chart-data')}}' + '/' +kategori+ '?periode='+periode+'&tahun='+tahun,
 				method: "GET",
 				success: function(data){
 					console.log(data['soal'][index].nilai);

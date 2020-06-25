@@ -26,6 +26,9 @@ class CreateJawabanTable extends Migration
             $table->integer('nilai');
             $table->text('kritik');
             $table->boolean('status');
+            $table->integer('ganjil')->nullable();
+            $table->integer('genap')->nullable();
+            $table->integer('tahun')->nullable();
             $table->timestamps();
         });
     }

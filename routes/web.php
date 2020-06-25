@@ -54,4 +54,5 @@ Route::post('/jawaban/store/{kategori}', 'JawabanController@store');
 Route::post('/user/import_excel', 'Admin\UsersController@import_excel');
 
 //status
-Route::post('/status', 'Admin\UsersController@status');
+Route::get('/status', 'ChartController@status');
+Route::get('/hasil', 'ChartController@hasil');

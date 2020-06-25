@@ -28,14 +28,14 @@ class ChartController extends Controller
 
     public function chart(Request $request)
     {
-
+        // dd($request);
         $soal = Soal::where('layanan_id', $request->layanan_id)->get();
 
         return view('Chart.Chart2', [
             'soal' => $soal,
             'kategori' => $request->kategori_id,
-            'dari' => $request->dari,
-            'sampai' => $request->sampai
+            'periode' => $request->periode,
+            'tahun' => $request->tahun
         ]);
     }
 
@@ -44,18 +44,23 @@ class ChartController extends Controller
 
         $soal = Soal::where('layanan_id', $kategori->layanan->id)->get();
         $namaSoal = [];
-        $dari = new Carbon($request->dari);
-        $sampai = new Carbon($request->sampai);
+        $periode = $request->periode;
+        $tahun = $request->tahun;
 
         foreach ($soal as $itemSoal) {
             $pilihan = [];
             $nilai = [];
-
-            foreach ($itemSoal->pilihan as $itemPilihan) {
-                array_push($pilihan, $itemPilihan->pilihan);
-                array_push($nilai,  $itemSoal->jawaban()->where('nilai', $itemPilihan->value)->where('kategori_id', $kategori->id)->whereBetween('created_at', [$dari, $sampai])->count());
+            if ($periode == 1) {
+                foreach ($itemSoal->pilihan as $itemPilihan) {
+                    array_push($pilihan, $itemPilihan->pilihan);
+                    array_push($nilai,  $itemSoal->jawaban()->where('nilai', $itemPilihan->value)->where('kategori_id', $kategori->id)->where('ganjil', 1)->where('tahun', $tahun)->count());
+                }
+            } else {
+                foreach ($itemSoal->pilihan as $itemPilihan) {
+                    array_push($pilihan, $itemPilihan->pilihan);
+                    array_push($nilai,  $itemSoal->jawaban()->where('nilai', $itemPilihan->value)->where('kategori_id', $kategori->id)->where('genap', 1)->where('tahun', $tahun)->count());
+                }
             }
-
             array_push($namaSoal, [
                 'soal' => $itemSoal->soal,
                 'pilihan' => $pilihan,
@@ -70,5 +75,41 @@ class ChartController extends Controller
     public function getKategori(Layanan $layanan)
     {
         return $layanan->kategori()->select('id', 'kategori')->get();
+    }
+
+
+    public function hasil(Request $request)
+    {
+        $soal = Soal::where('layanan_id', $request->layanan_id)->get();
+        $periode = $request->periode;
+        $tahun = $request->tahun;
+
+        return view('Chart.hasil', [
+            'soalPerLayanan' => $soal,
+            'kategori' => $request->kategori_id,
+            'periode' => $periode,
+            'tahun' => $tahun
+        ]);
+    }
+
+    public function status(Request $request)
+    {
+        $kategori = $request->kategori_id;
+        $tahun = $request->tahun;
+        $periode = $request->periode;
+
+        $user = User::whereHas('roles', function ($query) {
+            $query->where('name', 'responden');
+        })->whereDoesntHave('jawaban', function ($query) use ($kategori, $tahun, $periode) {
+            if ($periode == 1) {
+                $query->where('kategori_id', $kategori)->where('tahun', $tahun)->where('ganjil', 1);
+            } else {
+                $query->where('kategori_id', $kategori)->where('tahun', $tahun)->where('genap', 1);
+            }
+        })->get();
+
+        return view('Chart.status', [
+            'userTanpaJawaban' => $user
+        ]);
     }
 }

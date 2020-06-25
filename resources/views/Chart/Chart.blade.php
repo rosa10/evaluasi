@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="box-body">
-      <form method="get" action="{{url('chart2')}}">
+      <form method="get" action="" id="formSubmit">
 		@csrf
           <div class="form-group">
 			<label for="layanan">Layanan</label>
@@ -41,12 +41,29 @@
 			</select>
         </div>
         <div class="form-group">
-                        <label for="dari"> Dari Tanggal </label>
-                        <input type="date" name="dari" value="dd-mm-yyyy" required> 
-                        <label for="sampai">    Sampai Tanggal </label>
-                        <input type="date" name="sampai" value="dd-mm-yyyy" required>		
+                        	<label for="kategori">Periode</label>
+			<select  id="periode" name="periode" class="form-control" required>
+
+				<option  selected disabled >
+          Periode
+        </option>
+        <option value="1">Ganjil</option>
+        <option value="2">Genap</option>
+			</select>
                       </div>
-        <button type="submit" class="btn btn-primary">Lihat Chart</button>
+        <div class="form-group">
+         	<label for="kategori">Tahun</label>
+			<input type="text" name="tahun"
+       class="datepicker-here"
+       data-language='en'
+       data-min-view="years"
+       data-view="years"
+       data-date-format="yyyy" />
+			</select>
+                      </div>
+        <button id="button_chart" type="submit" class="btn btn-primary" data-url="{{url('chart2')}}">Lihat Chart</button>
+        <button id="button_hasil" type="submit" class="btn btn-warning" data-url="{{url('hasil')}}">Lihat Hasil</button>
+        <button id="button_status" type="submit" class="btn btn-danger" data-url="{{url('status')}}">Status Pengisian</button>
       </form>
     </div>
     <!-- /.box-body -->
@@ -70,6 +87,29 @@
             });
           });
         });
+
+        $('#button_chart').click(function() {
+          var url = $(this).attr('data-url');
+          $("#formSubmit").attr("action", url);
+        });
+
+        $('#button_hasil').click(function() {
+          var url = $(this).attr('data-url');
+          $("#formSubmit").attr("action", url);
+        });
+
+        $('#button_status').click(function() {
+          var url = $(this).attr('data-url');
+          $("#formSubmit").attr("action", url);
+        });
+        $('input[name="tahun"]').daterangepicker({
+                autoclose: true,
+            format: " yyyy",
+            viewMode: "years",
+            minViewMode: "years"
+                
+          });
       });
+      
       </script>
   @endsection

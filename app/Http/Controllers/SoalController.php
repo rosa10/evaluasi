@@ -46,8 +46,6 @@ class SoalController extends Controller
     public function store(Request $request)
     {
         $soal = Soal::create([
-            'dari' => $request->dari,
-            'sampai' => $request->sampai,
             'layanan_id' => $request->layanan_id,
             'soal' => $request->soal,
         ]);
@@ -95,8 +93,6 @@ class SoalController extends Controller
         $soal->pilihan()->sync($request->pilihan);
         Soal::where('id', $soal->id)
             ->update([
-                'dari' => $request->dari,
-                'sampai' => $request->sampai,
                 'layanan_id' => $request->layanan_id,
                 'soal' => $request->soal,
             ]);

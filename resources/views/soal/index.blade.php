@@ -15,8 +15,6 @@
                         <th scope="col">Layanan</th>
                         <th scope="col">Pertanyaan</th>
                         <th width="200px" scope="col">Pilihan</th>
-                        <th scope="col">Berlaku Dari</th>
-                        <th scope="col">Berlaku Sampai</th>
 						            <th scope="col"width="160px">Aksi</th>
                       </tr>
                     </thead>
@@ -34,8 +32,7 @@
                           <th>
                             {{implode(', ',$soal->pilihan()->get()->pluck('pilihan')->sort()->toArray())}}
                           </th>
-                          <th>{{$soal->dari}}</th>
-                          <th>{{$soal->sampai}}</th>
+                          
                           <th>
                             <a href="{{route('soal.edit',$soal->id)}}" class="pull-left">
                               <button type="button" class="btn btn-primary btn-sm">Edit</button>

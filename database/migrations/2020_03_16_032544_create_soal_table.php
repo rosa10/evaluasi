@@ -18,8 +18,6 @@ class CreateSoalTable extends Migration
             $table->unsignedBigInteger('layanan_id');
             $table->foreign('layanan_id')->references('id')->on('layanan')->onDelete('cascade');
             $table->text('soal');
-            $table->date('dari');
-            $table->date('sampai');
             $table->timestamps();
         });
     }
