@@ -1,14 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-ini hasil
 <div class="box">
     <div class="box-body">
-
+<div class="box-header with-border">
+        <a href="{{url('chart')}}" class="btn btn-danger my-2 ">Kembali</a>
+        <div class="box-tools pull-right">
+        </div>
+    </div>
         <table class='table table-bordered'>
             <thead>
                 <tr>
-                    <th>ID Soal</th>
+                    <th>Soal</th>
                     <th>Jumlah Nilai</th>
                     <th>Jumlah Responden</th>
                     <th>Rata Per Soal</th>
@@ -42,7 +45,7 @@ ini hasil
         
         <div class="row" style="margin-top: 12px">
             <div class="col-md-12 text-center">
-                <a href="{{url('/cetak/cetak_pdf',$kategori)}}" class="btn btn-primary my-2">Cetak Laporan</a>
+                <a href="{{url('/pdf')}}" class="btn btn-primary my-2">Cetak Laporan</a>
             </div>
         </div>
     </div>

@@ -83,7 +83,7 @@
             </ul>
           </li>
           <li>
-            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+            {{-- <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a> --}}
           </li>
         </ul>
       </div>
@@ -101,7 +101,7 @@
         </div>
         <div class="pull-left info">
           <p>{{{Auth::user()->name}}}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> {{Auth::user()->email}}</a>
+           {{Auth::user()->email}}
         </div>
       </div>
 

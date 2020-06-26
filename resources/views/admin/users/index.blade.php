@@ -13,7 +13,7 @@
                     Import Excel
                   </button>
                   </div>
-                  <div class="pull-right">
+                  {{-- <div class="pull-right">
                     
                     <!-- Date range -->
                     <form action="{{url('status')}}" method="post">
@@ -26,7 +26,7 @@
                         <button type="submit" value="FILTER" class="btn btn-primary ">Cek Status</button>
                       </div>
                     </form>
-                </div>
+                </div> --}}
                   <!-- Import Excel -->
                   <div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">

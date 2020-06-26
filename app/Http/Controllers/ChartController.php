@@ -11,6 +11,7 @@ use App\Layanan;
 use App\Pilihan;
 use Carbon\Carbon;
 use DB;
+use PDF;
 use Illuminate\Http\Request;
 
 class ChartController extends Controller
@@ -28,7 +29,12 @@ class ChartController extends Controller
 
     public function chart(Request $request)
     {
-        // dd($request);
+        $this->validate($request, [
+            'layanan_id' => 'required',
+            'kategori_id' => 'required',
+            'periode' => 'required',
+            'tahun' => 'required'
+        ]);
         $soal = Soal::where('layanan_id', $request->layanan_id)->get();
 
         return view('Chart.Chart2', [
@@ -80,6 +86,12 @@ class ChartController extends Controller
 
     public function hasil(Request $request)
     {
+        $this->validate($request, [
+            'layanan_id' => 'required',
+            'kategori_id' => 'required',
+            'periode' => 'required',
+            'tahun' => 'required'
+        ]);
         $soal = Soal::where('layanan_id', $request->layanan_id)->get();
         $periode = $request->periode;
         $tahun = $request->tahun;
@@ -94,6 +106,12 @@ class ChartController extends Controller
 
     public function status(Request $request)
     {
+        $this->validate($request, [
+            'layanan_id' => 'required',
+            'kategori_id' => 'required',
+            'periode' => 'required',
+            'tahun' => 'required'
+        ]);
         $kategori = $request->kategori_id;
         $tahun = $request->tahun;
         $periode = $request->periode;
@@ -111,5 +129,25 @@ class ChartController extends Controller
         return view('Chart.status', [
             'userTanpaJawaban' => $user
         ]);
+    }
+    public function pdf(Request $request)
+    {
+        $soal = Soal::where('layanan_id', $request->layanan_id)->get();
+        $periode = $request->periode;
+        $tahun = $request->tahun;
+        $pdf = PDF::loadview('Chart.hasil_pdf', [
+            'soalPerLayanan' => $soal,
+            'kategori' => $request->kategori_id,
+            'periode' => $periode,
+            'tahun' => $tahun
+        ]);
+
+        return $pdf->download('laporan-laporan-pdf.pdf');
+        // return view('Chart.hasil', [
+        //     'soalPerLayanan' => $soal,
+        //     'kategori' => $request->kategori_id,
+        //     'periode' => $periode,
+        //     'tahun' => $tahun
+        // ]);
     }
 }

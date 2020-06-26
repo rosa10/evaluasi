@@ -34,9 +34,10 @@
                           </th>
                           
                           <th>
-                            <a href="{{route('soal.edit',$soal->id)}}" class="pull-left">
-                              <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                            <a href="{{url(route('soal.edit',$soal->id))}}" class="btn btn-primary btn-sm mr-2">
+                              Edit
                             </a>
+                            
                             <button id="tombolHapusData"
                                     class="btn btn-danger btn-sm delete-data"
                                     data-name="{{ $soal->soal }}" data-toggle="modal"

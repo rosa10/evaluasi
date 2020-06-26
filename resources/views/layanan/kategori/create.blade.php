@@ -65,9 +65,9 @@
 						<td>{{$dataKategori->kategori}}</td>
 						{{-- <td>{{implode(', ',$dataKategori->user()->get()->pluck('name')->sort()->toArray())}}</td> --}}
 						<td>
-						<a href="{{url('cetak',$dataKategori->id)}}" class="d-inline p-2">
+						{{-- <a href="{{url('cetak',$dataKategori->id)}}" class="d-inline p-2">
 								<button type="button" class="btn btn-info btn-sm">Cetak Laporan</button>
-							</a>
+							</a> --}}
 						<a href="{{route('kategori.edit',$dataKategori->id)}}" class="d-inline p-2">
 								<button type="button" class="btn btn-warning btn-sm">Edit</button>
 							</a>

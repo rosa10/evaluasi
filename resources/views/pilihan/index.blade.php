@@ -24,9 +24,10 @@
                           <th>{{$pilihan->pilihan}}</th>
                           <th>{{$pilihan->value}}</th>
                           <th>
-                            <a href="{{route('pilihan.edit',$pilihan->id)}}" class="pull-left">
-                              <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                            <a href="{{route('pilihan.edit',$pilihan->id)}}" class="btn btn-primary btn-sm mr-2">
+                              Edit
                             </a>
+                            
                             <button id="tombolHapusData"
                                     class="btn btn-danger btn-sm delete-data"
                                     data-name="{{ $pilihan->pilihan }}" data-toggle="modal"
@@ -35,11 +36,7 @@
                                         class="fa fa-trash"></i>
                                     Delete
                                 </button>
-                            {{-- <form action="{{route('pilihan.destroy',$pilihan->id)}}" method="post" class="pull-right">
-                              @csrf
-                              @method('delete')
-                              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form> --}}
+                            
                           </th>
                           
                         </tr>

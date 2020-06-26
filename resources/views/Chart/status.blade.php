@@ -4,7 +4,11 @@
 
 <div class="box">
     <div class="box-body">
-
+<div class="box-header with-border">
+        <a href="{{url('chart')}}" class="btn btn-danger my-2 ">Kembali</a>
+        <div class="box-tools pull-right">
+        </div>
+    </div>
         <table class="box bordered-table">
             <thead>
                 <tr>

@@ -15,8 +15,8 @@
                         <th scope="col">No.</th>
                         <th scope="col">Penanggungjawab</th>
                         <th scope="col">Layanan</th>
-                        <th scope="col">Kode Layanan</th>
-						            <th scope="col"width="250px">Aksi</th>
+                        {{-- <th scope="col">Kode Layanan</th> --}}
+						            <th scope="col"width="300px">Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -32,10 +32,10 @@
                             {{implode(', ',$layanan->user()->get()->pluck('name')->sort()->toArray())}}
                           </td>
                           <td>{{$layanan->layanan}}</td>
-                          <td>{{$layanan->id}}</td>
+                          {{-- <td>{{$layanan->id}}</td> --}}
                           <td class="pull-left">
                             <a href="{{url('layanan/create-kategori/'.$layanan->id)}}">
-                              <button type="button" class="btn btn-warning btn-sm mr-2"><i class="fa fa-plus"></i> Kategori</button>
+                              <button type="button" class="btn btn-warning btn-sm mr-2"><i class="fa fa-plus"></i> Kategori Layanan</button>
                             </a>
 
                             <a href="{{route('layanan.edit',$layanan->id)}}">

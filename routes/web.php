@@ -31,8 +31,8 @@ Route::post('/layanan/create-kategori/{layanan}', 'KategoriController@store');
 Route::resource('/layanan', 'LayananController')->except('show');
 
 //laporan
-Route::get('/cetak/{kategori}', 'CetakController@index');
-Route::get('/cetak/cetak_pdf/{kategori}', 'CetakController@cetak_pdf');
+
+// Route::get('/cetak/cetak_pdf/{kategori}', 'CetakController@cetak_pdf');
 
 //chart
 Route::get('/chart', 'ChartController@index');
@@ -56,3 +56,4 @@ Route::post('/user/import_excel', 'Admin\UsersController@import_excel');
 //status
 Route::get('/status', 'ChartController@status');
 Route::get('/hasil', 'ChartController@hasil');
+Route::get('/pdf', 'ChartController@pdf');
