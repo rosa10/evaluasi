@@ -3,8 +3,13 @@
 @section('content')
 <div class="box">
     <div class="box-header with-border">
+        <a href="{{url('jawaban')}}" class="btn btn-danger my-2 ">Kembali</a>
+		<div class="box-tools pull-right">
+		</div>
         <div class="box-body">
 
+        
+    
 
             <form method="post" action="{{url('/jawaban/store/'.$kategori->id)}}">
                 @csrf

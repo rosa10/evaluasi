@@ -100,7 +100,8 @@ class ChartController extends Controller
             'soalPerLayanan' => $soal,
             'kategori' => $request->kategori_id,
             'periode' => $periode,
-            'tahun' => $tahun
+            'tahun' => $tahun,
+            'layanan' => $request->layanan_id
         ]);
     }
 
@@ -132,22 +133,22 @@ class ChartController extends Controller
     }
     public function pdf(Request $request)
     {
+
         $soal = Soal::where('layanan_id', $request->layanan_id)->get();
         $periode = $request->periode;
         $tahun = $request->tahun;
+        $layanan = Layanan::find($request->layanan_id)->value('layanan');
+        $kategori = Kategori::where('layanan_id', $request->layanan_id)->value('kategori');
+
         $pdf = PDF::loadview('Chart.hasil_pdf', [
             'soalPerLayanan' => $soal,
             'kategori' => $request->kategori_id,
             'periode' => $periode,
-            'tahun' => $tahun
+            'tahun' => $tahun,
+            'layanan' => $layanan,
+            'namaKategori' => $kategori
         ]);
 
         return $pdf->download('laporan-laporan-pdf.pdf');
-        // return view('Chart.hasil', [
-        //     'soalPerLayanan' => $soal,
-        //     'kategori' => $request->kategori_id,
-        //     'periode' => $periode,
-        //     'tahun' => $tahun
-        // ]);
     }
 }

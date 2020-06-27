@@ -50,7 +50,7 @@ Route::get('/jawaban/index/{kategori}', 'JawabanController@index');
 Route::post('/jawaban/store/{kategori}', 'JawabanController@store');
 
 //excel
-// Route::get('/user/export_excel', 'Admin\UsersController@export_excel');
+Route::get('/user/export_excel', 'Admin\UsersController@export_excel');
 Route::post('/user/import_excel', 'Admin\UsersController@import_excel');
 
 //status

@@ -12,7 +12,7 @@ use DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use App\Exports\UserExport;
 use Session;
 use App\Imports\UserImport;
 use Maatwebsite\Excel\Facades\Excel;
@@ -156,6 +156,10 @@ class UsersController extends Controller
 
         // alihkan halaman kembali
         return redirect('admin/user');
+    }
+    public function export_excel()
+    {
+        return Excel::download(new UserExport, 'User.xlsx');
     }
     public function status(Request $request)
     {

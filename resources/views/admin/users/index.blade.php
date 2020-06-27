@@ -12,6 +12,7 @@
                   <button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
                     Import Excel
                   </button>
+                  <a role="button" class="btn btn-outline-dark" href="{{url('user/export_excel')}}">Contoh Excel</a>
                   </div>
                   {{-- <div class="pull-right">
                     

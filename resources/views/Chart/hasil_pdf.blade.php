@@ -36,26 +36,58 @@
 		}
 		table, th,td{
 			border:1 px solid black;
+			padding: 8px
 		}
 	</style>
 </head>
 <body style="font-size:0.85em; border-style:solid; padding:16px">
-	<table >
+<h4>Hasil Pengisian Layanan {{$layanan}} {{$namaKategori}} Untuk Semester 
+	@if($periode==1)Ganjil
+@else 
+Genap
+@endif Tahun {{$tahun}}</h4>
+	<table>
 		<thead>
 			<tr>
-				<th>ID Soal</th>
-				<th>Jumlah Nilai</th>
-				<th>Jumlah Reponden</th>
-				<th>Rata Per Soal</th>
+				<th>Soal</th>
+				<th style="text-align:center">Jumlah Nilai</th>
+				<th style="text-align:center">Jumlah Responden</th>
+				<th style="text-align:center">Rata Per Soal</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-			</tr>
+			@foreach ($soalPerLayanan as $soal)
+                <tr>
+                    {{-- {{$periode}} --}}
+                    <td>{{$soal->soal}}</td>
+                    @if ($periode==1)
+                    <td align="center">{{$nilai = $soal->jawaban()->where('kategori_id', $kategori)->where('ganjil',  1)
+                    ->where('tahun',$tahun)->sum('nilai')}}
+                    </td>
+                    <td align="center" >{{$responden = $soal->jawaban()->where('kategori_id', $kategori)->where('ganjil',  1)
+                    ->where('tahun',$tahun)->count()}}</td>
+                    <td align="center">
+						@if($responden == 0)
+							-
+						@else 
+							{{round($nilai/$responden,2)}}
+						@endif
+					</td>
+                    @else
+                    <td align="center">{{$nilai = $soal->jawaban()->where('kategori_id', $kategori)->where('genap',  1)
+                    ->where('tahun',$tahun)->sum('nilai')}}
+                    </td>
+                    <td align="center">{{$responden = $soal->jawaban()->where('kategori_id', $kategori)->where('genap',  1)
+                    ->where('tahun',$tahun)->count()}}</td>
+                    <td align="center">@if($responden == 0)
+							-
+						@else 
+							{{round($nilai/$responden,2)}}
+						@endif</td>
+                    @endif
+                    
+                </tr>
+                @endforeach
 		</tbody>
 	</table>
 	
