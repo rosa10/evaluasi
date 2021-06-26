@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('page-title','Chart')
+@section('page-title','Hasil Evaluasi')
 
   @section('content')
   <!-- Default box -->
@@ -8,7 +8,7 @@
   <div class="box">
     <div class="box-header with-border">
         
-      Halaman ini adalah untuk melihat hasil pengisian evaluasi dalam bentuk chart
+      Halaman ini adalah untuk melihat hasil pengisian evaluasi 
        {{-- <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
           <i class="fa fa-minus"></i></button>

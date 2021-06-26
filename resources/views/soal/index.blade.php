@@ -35,7 +35,7 @@
                           
                           <th>
                             <a href="{{url(route('soal.edit',$soal->id))}}" class="btn btn-primary btn-sm mr-2">
-                              Edit
+                              Ubah
                             </a>
                             
                             <button id="tombolHapusData"
@@ -44,7 +44,7 @@
                                     data-target="#modalHapusData"
                                     data-url="{{url('soal/'.$soal->id)}}"><i
                                         class="fa fa-trash"></i>
-                                    Delete
+                                    Hapus
                                 </button>
                             </form>
                           </th>

@@ -66,7 +66,7 @@
 					var chartData = {
                         labels: pilihanValue,
                         datasets: [{
-                            label: 'Pilihan',
+                            label: 'Total Responden = jumlah responden',
                             data: nilaiValue,
                             backgroundColor: 
                                 [

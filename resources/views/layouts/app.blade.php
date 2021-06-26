@@ -65,7 +65,7 @@
               <li class="user-footer">
                 <div class="pull-left">
                   @can('manage-users')
-                  <a href="{{url('admin/user')}}" class="btn btn-default btn-flat">User Management</a>
+                  <a href="{{url('admin/user')}}" class="btn btn-default btn-flat">Manajemen Pengguna</a>
                   @endcan
                 </div>
                 <div class="pull-right">

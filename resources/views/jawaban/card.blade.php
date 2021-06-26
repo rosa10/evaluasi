@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('page-title','Pilhan Evaluasi')
+@section('page-title','Pilihan Evaluasi')
 @section('content')
 <div class="box">
     <div class="box-header with-border">

@@ -69,7 +69,7 @@
 								<button type="button" class="btn btn-info btn-sm">Cetak Laporan</button>
 							</a> --}}
 						<a href="{{route('kategori.edit',$dataKategori->id)}}" class="d-inline p-2">
-								<button type="button" class="btn btn-warning btn-sm">Edit</button>
+								<button type="button" class="btn btn-warning btn-sm">Ubah</button>
 							</a>
 							<button id="tombolHapusData"
                                     class="btn btn-danger btn-sm delete-data"
@@ -77,7 +77,7 @@
                                     data-target="#modalHapusData"
                                     data-url="{{url('kategori/'.$dataKategori->id)}}"><i
                                         class="fa fa-trash"></i>
-                                    Delete
+                                    Hapus
                                 </button>
 						</td>
 					</tr>

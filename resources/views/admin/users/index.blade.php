@@ -84,7 +84,7 @@
                           </td>
                           <td>
                             <a href="{{url('admin/user/'.$user->id.'/edit')}}" class="btn btn-primary btn-sm mr-2">
-                              Edit
+                              Ubah
                             </a>
                     
                             <button id="tombolHapusData"
@@ -93,7 +93,7 @@
                             data-target="#modalHapusData"
                             data-url="{{url('admin/user/'.$user->id)}}"><i
                                 class="fa fa-trash"></i>
-                            Delete
+                            Hapus
                         </button>
                           </td>
                           

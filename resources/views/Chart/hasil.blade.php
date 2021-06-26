@@ -12,9 +12,9 @@
             <thead>
                 <tr>
                     <th>Soal</th>
-                    <th class="text-center">Jumlah Nilai</th>
-                    <th class="text-center">Jumlah Responden</th>
-                    <th class="text-center">Rata Per Soal</th>
+                    <th class="text-center">Nilai Total</th>
+                    <th class="text-center">Responden</th>
+                    <th class="text-center">Rata-Rata</th>
                 </tr>
             </thead>
             <tbody>
@@ -35,11 +35,19 @@
                     </td>
                     <td align="center">{{$responden = $soal->jawaban()->where('kategori_id', $kategori)->where('genap',  1)
                     ->where('tahun',$tahun)->count()}}</td>
-                    <td align="center">{{round($nilai/$responden,2)}}</td>
+                    <td align="center">{{$rata=round($nilai/$responden,2)}}</td>
                     @endif
                     
                 </tr>
                 @endforeach
+                <tr>
+                    <td>
+                        Jumlah 
+                    </td>
+                <td>{{$nilai}}</td>
+                <td>{{$responden}}</td>
+                <td>{{$rata}}</td>
+                </tr>
             </tbody>
         </table>
         

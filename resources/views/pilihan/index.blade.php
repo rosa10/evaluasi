@@ -25,7 +25,7 @@
                           <th>{{$pilihan->value}}</th>
                           <th>
                             <a href="{{route('pilihan.edit',$pilihan->id)}}" class="btn btn-primary btn-sm mr-2">
-                              Edit
+                              Ubah
                             </a>
                             
                             <button id="tombolHapusData"
@@ -34,7 +34,7 @@
                                     data-target="#modalHapusData"
                                     data-url="{{url('pilihan/'.$pilihan->id)}}"><i
                                         class="fa fa-trash"></i>
-                                    Delete
+                                    Hapus
                                 </button>
                             
                           </th>

@@ -35,11 +35,11 @@
                           {{-- <td>{{$layanan->id}}</td> --}}
                           <td class="pull-left">
                             <a href="{{url('layanan/create-kategori/'.$layanan->id)}}">
-                              <button type="button" class="btn btn-warning btn-sm mr-2"><i class="fa fa-plus"></i> Kategori Layanan</button>
+                              <button type="button" class="btn btn-warning btn-sm mr-2"><i class="fa fa-plus"></i> Jenis Layanan</button>
                             </a>
 
                             <a href="{{route('layanan.edit',$layanan->id)}}">
-                              <button type="button" class="btn btn-primary btn-sm mr-2">Edit</button>
+                              <button type="button" class="btn btn-primary btn-sm mr-2 ">Ubah</button>
                             </a>
 
                             <button id="tombolHapusData"
@@ -48,7 +48,7 @@
                                     data-target="#modalHapusData"
                                     data-url="{{url('layanan/'.$layanan->id)}}"><i
                                         class="fa fa-trash"></i>
-                                    Delete
+                                    Hapus
                                 </button>
                           </td>
                           
